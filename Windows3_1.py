@@ -8,12 +8,12 @@ import Windows3_1_setup
 import windows3_1_run
 
 Windows3_1_setup.setup()
-# Проверяем, существует ли файл
+# Проверяем, не существует ли файл
 if not os.path.exists('C:\\win31\\windowsSetupEnds'):
     messagebox.showerror('','Не удалось установить Windows. Попробуйте перезапустить установку Windows')
     sys.exit()
 
-
+stop = False
 root = Tk()
 root.title('Starting...')
 root.geometry('2000x1500')
@@ -37,15 +37,30 @@ def create():
     def nextcreate():
         try:
             def fileMenu(event):
-
+                def dltFile():
+                    group.grid_forget()
+                    group.place_forget()
+                    menuOffile.destroy()
+                    os.rmdir('C:\\win31\\%s' % name)
                 def movebutton():
-                    
+                    global stop
+                    stop = False
                     def movebutton2(event):
-                        group.place(x=event.x,y=event.y)
-                    programmng.bind('<Motion>',movebutton2)
+                        global stop
+                        def stopmove():
+                            global stop
+                            stop = True
+                        Okmovebtn = Button(menuOffile,command=stopmove,text='Ок')
+                        Okmovebtn.grid(row=0,column=1)
+                        if not stop:
+                            group.place(x=event.x,y=event.y)
+
+                    programmng.bind('<B1-Motion>',movebutton2)
                 menuOffile = Toplevel()
                 moveBtn = Button(menuOffile,text='Переместить',command=movebutton)
                 moveBtn.grid()
+                dltBtn = Button(menuOffile, text='Удалить', command=dltFile)
+                dltBtn.grid()
                 menuOffile.mainloop()
 
             def opencreatedfolder():
@@ -61,11 +76,11 @@ def create():
                 def deiconfy2():
                     def iconfy():
                         c.deiconify()
-                        iconifyCreatedFolder.grid_forget()
+                        group.grid_forget()
 
                     c.iconify()
-                    iconifyCreatedFolder = Button(programmng, image=forAccessories, command=iconfy)
-                    iconifyCreatedFolder.grid()
+                    group = Button(programmng, image=forAccessories, command=iconfy)
+                    group.grid()
 
                 def fullscreen2():
                     if fullscreenbutton2['text'] == '>':
