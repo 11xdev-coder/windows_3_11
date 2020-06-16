@@ -8,7 +8,6 @@ import Windows3_1_setup
 import windows3_1_run
 
 Windows3_1_setup.setup()
-# Проверяем, не существует ли файл
 if not os.path.exists('C:\\win31\\windowsSetupEnds'):
     messagebox.showerror('','Не удалось установить Windows. Попробуйте перезапустить установку Windows')
     sys.exit()
