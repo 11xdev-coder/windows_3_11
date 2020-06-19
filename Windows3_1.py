@@ -172,8 +172,24 @@ def deiconfy():
     iconifyProgramManager = Button(desktop,image=IconProgramManager,command=iconfy)
     iconifyProgramManager.grid()
 
+
 def run():
     windows3_1_run.startrun()
+
+
+def content():
+    def autoarrange():
+        tkk = Tk()
+        tkk.title('Тут пусто,это тут не работает)')
+        tkk.mainloop()
+    contentTk = Toplevel()
+    contentTk.title('Справка - Диспетчер программ')
+    Button(contentTk,text='Назад',command=lambda: contentTk.destroy()).grid()
+    text = Text(contentTk)
+    text.insert(END,'Содержание Справки Диспетчера Программ\nДиспетчер программ Windows - это инструмент,\n с помощью которого можно легко запускать \n приложения и организовывать приложения \n и файлы в логические группы.\nКак...')
+    text.grid()
+    Button(contentTk,text='Упорядочить окна и значки',command=autoarrange).grid()
+    contentTk.mainloop()
 
 
 deiconifybutton = Button(programmng,text='<',command=deiconfy)
@@ -190,7 +206,19 @@ new_item = Menu(menu, tearoff=0)
 new_item.add_command(label='Создать', command=create)
 new_item.add_separator()
 new_item.add_command(label='Выполнить', command=run)
+new_item.add_separator()
+new_item.add_command(label='Выход из Windows', command=closed)
 menu.add_cascade(label='Файл', menu=new_item)
+new_item2 = Menu(menu, tearoff=0)
+new_item2.add_checkbutton(label='Автоупорядочивание')
+new_item2.add_checkbutton(label='Сворачивать при работе')
+new_item2.add_checkbutton(label='Сохранять параметры при выходе')
+menu.add_cascade(label='Параметры', menu=new_item2)
+new_item3 = Menu(menu, tearoff=0)
+new_item3.add_command(label='Содержание',command=content)
+new_item3.add_checkbutton(label='Сворачивать при работе')
+new_item3.add_checkbutton(label='Сохранять параметры при выходе')
+menu.add_cascade(label='Справка', menu=new_item3)
 programmng.config(menu=menu)
 
 programmng.protocol('WM_DELETE_WINDOW',closed)
