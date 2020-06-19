@@ -215,8 +215,6 @@ new_item2.add_checkbutton(label='Сохранять параметры при в
 menu.add_cascade(label='Параметры', menu=new_item2)
 new_item3 = Menu(menu, tearoff=0)
 new_item3.add_command(label='Содержание',command=content)
-new_item3.add_checkbutton(label='Сворачивать при работе')
-new_item3.add_checkbutton(label='Сохранять параметры при выходе')
 menu.add_cascade(label='Справка', menu=new_item3)
 programmng.config(menu=menu)
 
