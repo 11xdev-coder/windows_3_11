@@ -4,6 +4,7 @@ import sys
 import os
 import playsound
 from tkinter import messagebox
+from tkinter.ttk import Combobox
 import Windows3_1_setup
 import windows3_1_run
 
@@ -134,6 +135,7 @@ def create():
         else:
             btn['state'] = 'disable'
 
+
 def mainAccessories():
     mainWindow = Toplevel()
     mainWindow.mainloop()
@@ -176,6 +178,22 @@ def run():
     windows3_1_run.startrun()
 
 
+def search():
+    searchTk = Toplevel()
+    searchTk.title('Поиск')
+    Label(searchTk,text='Введите слово или выберите его из списка. Затем выберите Показать темы').grid()
+    c = Combobox(searchTk)
+    c['values'] = ('приложения', 'упорядочивание', 'изменение', 'копирование', 'создание', 'удаление', 'документы', 'иконки', 'группы', 'перемещение')
+    c.current(0)
+    Entry(searchTk).grid()
+    c.grid(column=0,row=2)
+    Button(searchTk,text='Отменить',command=lambda: searchTk.destroy()).grid(row=0,column=1)
+    Button(searchTk,text='Показать темы',command=lambda: messagebox.showerror('','Не удалось найти тему')).grid(row=1,column=1)
+    Label(searchTk,text='выберите тему, затем выберите Перейти к').grid(row=3,column=0)
+    Button(searchTk,text='Перейти К').grid(row=2,column=1)
+    searchTk.mainloop()
+
+
 def content():
     def autoarrange():
         tkk = Tk()
@@ -184,9 +202,9 @@ def content():
     contentTk = Toplevel()
     contentTk.title('Справка - Диспетчер программ')
     Button(contentTk,text='Назад',command=lambda: contentTk.destroy()).grid()
-    text = Text(contentTk)
+    text = Text(contentTk,height=10)
     text.insert(END,'Содержание Справки Диспетчера Программ\nДиспетчер программ Windows - это инструмент,\n с помощью которого можно легко запускать \n приложения и организовывать приложения \n и файлы в логические группы.\nКак...')
-    text.grid()
+    text.grid(columnspan=10)
     Button(contentTk,text='Упорядочить окна и значки',command=autoarrange).grid()
     contentTk.mainloop()
 
@@ -215,6 +233,7 @@ new_item2.add_checkbutton(label='Сохранять параметры при в
 menu.add_cascade(label='Параметры', menu=new_item2)
 new_item3 = Menu(menu, tearoff=0)
 new_item3.add_command(label='Содержание',command=content)
+new_item3.add_command(label='Поиск справки по',command=search)
 menu.add_cascade(label='Справка', menu=new_item3)
 programmng.config(menu=menu)
 
