@@ -38,7 +38,6 @@ aboutImg = PhotoImage(file='images/aboutImg.png')
 thanksImg = PhotoImage(file='images/thanksImg.png')
 titrsImg = PhotoImage(file='images/titrs.png')
 
-
 def create():
     def nextcreate():
         try:
