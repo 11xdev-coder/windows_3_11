@@ -54,7 +54,7 @@ def setup():
             root4.title('Windows Setup')
             root4.geometry('+500+500')
             root4['bg'] = 'white'
-            setupIcon = PhotoImage(file='setupIcon.png')
+            setupIcon = PhotoImage(file='images/setupIcon.png')
             setupLbl = Label(root4,image=setupIcon)
             setupLbl.grid(column=0)
             Label(root4,text='Добро пожаловать в Микрусофт(только из одного человека) Windows 3.1!\n\n-Если у Вас нет опыта работы с Windows, см. \"Краткое путешествие по Микрусофт Windows\" в книге \"Приступая к работе\".\n-Если вы уже работали с Windows, см. \"Новые возможности этой версии\" в книге \"Приступая к работе\"').grid(row=0,column=1)

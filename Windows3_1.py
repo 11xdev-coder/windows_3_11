@@ -20,7 +20,7 @@ stop = False
 root = Tk()
 root.title('Starting...')
 root.geometry('2000x1500')
-startIcon = PhotoImage(file='startIcon.png')
+startIcon = PhotoImage(file='images/startIcon.png')
 Label(root,image=startIcon).place(x=500,y=375)
 for r in range(15):
     root.update()
@@ -32,11 +32,11 @@ root.destroy()
 desktop = Tk()
 programmng = Toplevel()
 programmng.geometry('500x500')
-IconProgramManager = PhotoImage(file='IconProgramManager.png')
-forAccessories = PhotoImage(file='IconForAccessories.png')
-aboutImg = PhotoImage(file='aboutImg.png')
-thanksImg = PhotoImage(file='thanksImg.png')
-titrsImg = PhotoImage(file='titrs.png')
+IconProgramManager = PhotoImage(file='images/IconProgramManager.png')
+forAccessories = PhotoImage(file='images/IconForAccessories.png')
+aboutImg = PhotoImage(file='images/aboutImg.png')
+thanksImg = PhotoImage(file='images/thanksImg.png')
+titrsImg = PhotoImage(file='images/titrs.png')
 
 
 def create():

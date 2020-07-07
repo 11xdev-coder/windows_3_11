@@ -9,7 +9,7 @@ def startrun():
             Button(about,text='OK',width=50,command=lambda: about.destroy()).grid()
             about.mainloop()
     runTk = Toplevel()
-    IconAboutWin = PhotoImage(file='IconAboutWin.png')
+    IconAboutWin = PhotoImage(file='images/IconAboutWin.png')
     runTk.title('Выполнить')
     Label(runTk,text='Командная строка').grid()
     e = Entry(runTk)
