@@ -8,6 +8,7 @@ from tkinter import messagebox
 from tkinter.ttk import Combobox
 import Windows3_1_setup
 import windows3_1_run
+import windows3_1_filemanager
 
 Windows3_1_setup.setup()
 if not os.path.exists('C:\\win31\\windowsSetupEnds'):
@@ -37,6 +38,7 @@ forAccessories = PhotoImage(file='images/IconForAccessories.png')
 aboutImg = PhotoImage(file='images/aboutImg.png')
 thanksImg = PhotoImage(file='images/thanksImg.png')
 titrsImg = PhotoImage(file='images/titrs.png')
+filemngImg = PhotoImage(file='images/filemng.png')
 
 def create():
     def nextcreate():
@@ -142,7 +144,47 @@ def create():
 
 
 def mainAccessories():
+    def des(event):
+        mainWindow.destroy()
+        mainButton.grid()
+        mainLbl.grid()
+    def fullscreen2():
+        if fullscreenbutton2['text'] == '>':
+            mainWindow.geometry('2000x1500+0+0')
+            fullscreenbutton2['text'] = '<>'
+            deiconifybutton2.place(x=1850, y=0)
+            fullscreenbutton2.place(x=1870, y=0)
+        elif fullscreenbutton2['text'] == '<>':
+            mainWindow.geometry('500x500+0+0')
+            fullscreenbutton2['text'] = '>'
+            deiconifybutton2.place(x=450, y=0)
+            fullscreenbutton2.place(x=470, y=0)
+
+    def deiconfy2():
+
+        def iconfy():
+            mainWindow.deiconify()
+            mainButton2.grid_forget()
+            mainLbl.grid_forget()
+
+        mainWindow.iconify()
+        mainButton2 = Button(programmng, image=forAccessories, command=iconfy)
+        mainButton2.grid()
+        mainLbl.grid()
+
+    messagebox.showinfo('','Нажмите F4 чтобы выйти из группы')
+    mainButton.grid_forget()
+    mainLbl.grid_forget()
     mainWindow = Toplevel()
+    mainWindow.geometry('500x500')
+    mainWindow.title('Главный')
+    deiconifybutton2 = Button(mainWindow, text='<', command=deiconfy2)
+    deiconifybutton2.place(x=450, y=0)
+    fullscreenbutton2 = Button(mainWindow, text='>', command=fullscreen2)
+    fullscreenbutton2.place(x=470, y=0)
+    filemng = Button(mainWindow,image=filemngImg,command=lambda: windows3_1_filemanager.main())
+    filemng.grid()
+    mainWindow.bind('<F4>',des)
     mainWindow.mainloop()
 
 
@@ -240,7 +282,8 @@ deiconifybutton = Button(programmng,text='<',command=deiconfy)
 deiconifybutton.place(x=450,y=0)
 mainButton = Button(programmng,image=forAccessories,command=mainAccessories)
 mainButton.grid(row=0,column=0)
-Label(programmng,text='Главный').grid(row=0,column=1)
+mainLbl = Label(programmng,text='Главный')
+mainLbl.grid(row=0,column=1)
 fullscreenbutton = Button(programmng,text='>',command=fullscreen)
 fullscreenbutton.place(x=470,y=0)
 programmng.title('Диспетчер программ')
