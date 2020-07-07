@@ -3,17 +3,19 @@ import time
 import sys
 import os
 import playsound
+import psutil
 from tkinter import messagebox
 from tkinter.ttk import Combobox
 import Windows3_1_setup
 import windows3_1_run
-
 
 Windows3_1_setup.setup()
 if not os.path.exists('C:\\win31\\windowsSetupEnds'):
     messagebox.showerror('','Не удалось установить Windows. Попробуйте перезапустить установку Windows')
     sys.exit()
 
+DISK = 'C:'
+free = psutil.disk_usage(DISK).free/(1024*1024*1024)
 stop = False
 root = Tk()
 root.title('Starting...')
@@ -32,6 +34,9 @@ programmng = Toplevel()
 programmng.geometry('500x500')
 IconProgramManager = PhotoImage(file='IconProgramManager.png')
 forAccessories = PhotoImage(file='IconForAccessories.png')
+aboutImg = PhotoImage(file='aboutImg.png')
+thanksImg = PhotoImage(file='thanksImg.png')
+titrsImg = PhotoImage(file='titrs.png')
 
 
 def create():
@@ -179,6 +184,28 @@ def run():
     windows3_1_run.startrun()
 
 
+def about():
+    aboutTk = Toplevel()
+    th = Label(aboutTk,image=thanksImg)
+    th2 = Label(aboutTk,text='Спасибо вам за то, что нашли эту пасхалку и тестируете мою Версию Windows')
+    titrs = Label(aboutTk,image=titrsImg)
+    def thanks(event):
+        th.grid()
+        th2.grid(row=1,column=1)
+        titrs.grid_forget()
+    def titres(event):
+        th.grid_forget()
+        th2.grid_forget()
+        titrs.grid()
+    img = Label(aboutTk,image=aboutImg)
+    img.grid()
+    Label(aboutTk,text='Майкрософт Windows Диспетчер программ \nВерсия 3.11 \nАвторское право @ 2020 Майкрософт Корп. \nЭтот продукт имеет лицензию на: \nВы. \n\nВаш серийный номер указан на внутренней стороне задней \nобложки руководства по началу работы с Майкрософт Windows. \nСтандартный режим \nПамять: %s' % int(free) + str('GB')).grid(row=0,column=1,columnspan=2)
+    Button(aboutTk,text='OK',command=lambda: aboutTk.destroy()).grid(row=0,column=3)
+    img.bind('<Double-Button-1>',thanks)
+    img.bind('<Triple-Button-1>',titres)
+    aboutTk.mainloop()
+
+
 def search():
     searchTk = Toplevel()
     searchTk.title('Поиск')
@@ -235,6 +262,7 @@ menu.add_cascade(label='Параметры', menu=new_item2)
 new_item3 = Menu(menu, tearoff=0)
 new_item3.add_command(label='Содержание',command=content)
 new_item3.add_command(label='Поиск справки по',command=search)
+new_item3.add_command(label='О диспетчере программ',command=about)
 menu.add_cascade(label='Справка', menu=new_item3)
 programmng.config(menu=menu)
 
