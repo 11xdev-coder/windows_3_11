@@ -7,7 +7,6 @@ def main():
     def des(event):
         filemng.destroy()
     messagebox.showinfo('','Нажмите F4 чтобы выйти из приложения')
-
     def detectfiles(event):
         try:
             files2 = 'C:\\' + event.widget.cget('text')
