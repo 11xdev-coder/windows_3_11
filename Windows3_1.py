@@ -10,6 +10,7 @@ import Windows3_1_setup
 import windows3_1_run
 import windows3_1_filemanager
 
+
 Windows3_1_setup.setup()
 if not os.path.exists(windows3_1_filemanager.DRIVE_LETTER_C + 'win31\\windowsSetupEnds'):
     messagebox.showerror('', 'Не удалось установить Windows. Попробуйте перезапустить установку Windows')

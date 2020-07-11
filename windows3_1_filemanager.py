@@ -5,6 +5,7 @@ import os
 DRIVE_LETTER_C = 'C:\\'
 DRIVE_LETTER_D = 'D:\\'
 
+
 def main():
     def detectfiles(event):
         try:
@@ -25,7 +26,7 @@ def main():
         btn.grid()
         btn.bind('<Button-1>', detectfiles)
     Label(filemng, text='----------------------------------------------------------').grid()
-    m = Menu(filemng,tearoff=False)
+    m = Menu(filemng, tearoff=False)
     ni3 = Menu(m)
     ni3.add_command(label='Выход', command=lambda: filemng.destroy())
     m.add_cascade(label='Закрыть', menu=ni3)
