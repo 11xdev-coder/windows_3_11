@@ -5,7 +5,6 @@ import os
 DRIVE_LETTER_C = 'C:\\'
 DRIVE_LETTER_D = 'D:\\'
 
-
 def main():
     def detectfiles(event):
         try:
