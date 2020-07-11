@@ -11,7 +11,7 @@ import windows3_1_run
 import windows3_1_filemanager
 
 Windows3_1_setup.setup()
-if not os.path.exists('C:\\win31\\windowsSetupEnds'):
+if not os.path.exists(windows3_1_filemanager.DRIVE_LETTER_C + 'win31\\windowsSetupEnds'):
     messagebox.showerror('', 'Не удалось установить Windows. Попробуйте перезапустить установку Windows')
     sys.exit()
 
@@ -155,7 +155,7 @@ def create():
 
 
 def mainAccessories():
-    def des(event):
+    def des():
         mainWindow.destroy()
         mainButton.grid()
         mainLbl.grid()
@@ -184,7 +184,6 @@ def mainAccessories():
         mainButton2.grid()
         mainLbl.grid()
 
-    messagebox.showinfo('', 'Нажмите F4 чтобы выйти из группы')
     mainButton.grid_forget()
     mainLbl.grid_forget()
     mainWindow = Toplevel()
@@ -196,7 +195,11 @@ def mainAccessories():
     fullscreenbutton2.place(x=470, y=0)
     filemng = Button(mainWindow, image=filemngImg, command=lambda: windows3_1_filemanager.main())
     filemng.grid()
-    mainWindow.bind('<F4>', des)
+    m = Menu(mainWindow, tearoff=False)
+    ni3 = Menu(m)
+    ni3.add_command(label='Выход', command=des)
+    m.add_cascade(label='Закрыть', menu=ni3)
+    mainWindow.config(menu=m)
     mainWindow.mainloop()
 
 
