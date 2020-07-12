@@ -100,7 +100,7 @@ def setup():
             lblFile = Label(root3, text='Файл: %s' % FileInstallingNow)
             lblFile.grid(row=1, column=0)
             pb = ttk.Progressbar(root3, length=525)
-            pb.grid(column=0, row=2, columnspan=4)
+            pb.grid(column=0, row=2)
             Button(root3, text='Выход из Setup', command=lambda: sys.exit()).grid(row=3)
             pb.step(random.randint(4, 12))
             time.sleep(1)
