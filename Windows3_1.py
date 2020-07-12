@@ -11,6 +11,14 @@ from tkinter.ttk import Combobox
 import Windows3_1_setup
 import windows3_1_run
 import windows3_1_filemanager
+from screeninfo import get_monitors
+
+for m in get_monitors():
+    pass
+
+width = m.width
+height = m.height
+ra = '%sx%s' % (width,height)
 
 Windows3_1_setup.setup()
 if not os.path.exists(DRIVE_LETTER_C + 'win31\\windowsSetupEnds'):
@@ -23,7 +31,7 @@ free = psutil.disk_usage(DISK).free / (1024 * 1024 * 1024)
 stop = False
 root = Tk()
 root.title('Starting...')
-root.geometry('2000x1500')
+root.geometry(ra)
 startIcon = PhotoImage(file='images/startIcon.png')
 Label(root, image=startIcon).place(x=500, y=375)
 for r in range(15):
@@ -337,7 +345,7 @@ menu.add_cascade(label='Справка', menu=new_item3)
 programmng.config(menu=menu)
 
 programmng.protocol('WM_DELETE_WINDOW', closed)
-desktop.geometry('2000x1500')
+desktop.geometry(ra)
 desktop.title('Windows 3.1!')
 desktop['bg'] = 'light grey'
 playsound.playsound('TADA.wav')
