@@ -8,14 +8,38 @@ import random
 import webbrowser
 import sys
 
+try:
+    os.rmdir('C:\\win31\\windowsSetupEnds')
+except:
+    pass
+
+if not os.path.exists('C:\\win31'):
+    messagebox.showerror('', 'Cannot start Install manager,try it later')
+    sys.exit()
+if not os.path.exists('C:\\win31\\users'):
+    messagebox.showerror('', 'Cannot start Install manager,try it later')
+    sys.exit()
+
 
 def setup():
     def AskName():
-        def next(event):
-            MakeSureYourName(root, username=namee.get())
+        def sign_in():
+            if not os.path.exists('C:\\win31\\users\\%s' % namee.get()):
+                messagebox.showerror('','Такого пользователя не существует')
+            else:
+                usernam = open('C:\\win31\\users\\%s\\username.txt' % namee.get(),'r')
+                passwo = open('C:\\win31\\users\\%s\\password.txt' % namee.get(),'r')
+                if usernam.readline() == namee.get() and passwo.readline() == passw.get():
+                    root.destroy()
+                    os.mkdir('C:\\win31\\windowsSetupEnds')
+                else:
+                    messagebox.showerror('','Некоректный пароль или имя!')
 
-        def nextbtn(name):
-            MakeSureYourName(root, username=namee.get())
+        def next(event):
+            MakeSureYourName(root, username=namee.get(), password=passw.get())
+
+        def nextbtn(name, password):
+            MakeSureYourName(root, username=namee.get(), password=passw.get())
 
         def helpME():
             helping = Tk()
@@ -26,29 +50,37 @@ def setup():
         root = Tk()
         root.title('Windows Setup')
         lbl = Label(root,
-                    text='В окне внизу введите Ваше полное имя\n\nЗатем выберите Продолжить или нажмите \nENTER.\n\nВведеная вами информация будет\nиспользована программой Setup для\nдальнейшей установки сиситемы Windows.')
+                    text='В окне внизу введите Ваше полное имя и пароль\n\nЗатем выберите Продолжить или нажмите \nENTER.\n\nВведеная вами информация будет\nиспользована программой Setup для\nдальнейшей установки сиситемы Windows.')
         lbl.grid(columnspan=3)
         Label(root, text='Имя:').grid(row=1, columnspan=3)
+        Label(root, text='Пароль: ').grid(row=4, columnspan=3)
         namee = Entry(root)
-        namee.grid(row=2, columnspan=3)
-        Button(root, command=lambda: nextbtn(namee.get()), text='Продолжить').grid(row=3, column=0)
-        Button(root, command=lambda: sys.exit(), text='Выход из Setup').grid(row=3, column=1)
-        Button(root, command=helpME, text='Справка').grid(row=3, column=2)
+        namee.grid(row=3, columnspan=3)
+        passw = Entry(root, show='*')
+        passw.grid(row=5, columnspan=3)
+        Button(root, command=lambda: nextbtn(namee.get(), passw.get()), text='Создать нового пользователя').grid(row=6,
+                                                                                                                 column=0)
+        Button(root, command=lambda: sys.exit(), text='Выход из Setup').grid(row=6, column=1)
+        Button(root, command=helpME, text='Справка').grid(row=6, column=2)
+        Button(root, command=sign_in, text='Войти').grid(row=6, column=3)
         root.bind('<KeyPress-Return>', next)
         root.mainloop()
 
-    def MakeSureYourName(rootForDestroy, username):
+    def MakeSureYourName(rootForDestroy, username, password):
+        if os.path.exists('C:\\win31\\users\\%s' % username):
+            messagebox.showerror('', 'Пользователь с таки именем уже существует')
+            rootForDestroy.destroy()
+            AskName()
+
         def next():
             root2.destroy()
-            try:
-                os.mkdir('C:\\win31')
-            except:
-                messagebox.showerror('Нет винды!',
-                                     'Невозможно установить операционную систему Windows,не удается начать копирование файлов,попробуйте перезапустить установку Windows')
-                sys.exit()
-            f = open('C:\\win31\\username.txt', 'w')
+            os.mkdir('C:\\win31\\users\\%s' % username)
+            f = open('C:\\win31\\users\\%s\\username.txt' % username, 'w')
             f.write(username)
             f.close()
+            p = open('C:\\win31\\users\\%s\\password.txt' % username, 'w')
+            p.write(password)
+            p.close()
             ApplicationInstallingNow = 'Календарь'
             FileInstallingNow = 'Calendar.exe'
             root3 = Tk()
@@ -165,8 +197,27 @@ def setup():
                 lastIcon.title('Windows setup ends!')
 
                 def restart():
+                    def check():
+                        usern = open('C:\\win31\\users\\%s\\username.txt' % username, 'r')
+                        passwo = open('C:\\win31\\users\\%s\\password.txt' % username, 'r')
+                        if usern.read() == u.get() and passwo.read() == pa.get():
+                            root6.destroy()
+                        else:
+                            messagebox.showerror('', 'Некоректный пароль или имя!')
+
                     os.mkdir('C:\\win31\\windowsSetupEnds')
                     root5.destroy()
+                    root6 = Tk()
+                    root6.title('')
+                    Label(root6, text='Имя:').grid()
+                    Label(root6, text='Пароль:').grid()
+                    u = Entry(root6)
+                    pa = Entry(root6, show='*')
+                    u.grid(column=1, row=0)
+                    pa.grid(column=1, row=1)
+                    OKbtn = Button(root6, command=check, text='OK')
+                    OKbtn.grid(columnspan=3)
+                    root6.mainloop()
 
                 Button(lastIcon, text='Перезагрузить', command=restart).grid(row=0, column=0)
                 Button(lastIcon, text='Вернуться в MS-DOS',
@@ -188,16 +239,26 @@ def setup():
             helping.mainloop()
 
         rootForDestroy.destroy()
+        if username.rstrip() == '':
+            messagebox.showerror('', 'Увы, но НУЖНО ВВОДИТЬ СВОЕ ИМЯ!')
+            AskName()
+        if password.rstrip() == '':
+            messagebox.showerror('', 'Увы, но НУЖНО ВВОДИТЬ СВОЙ ПАРОЛЬ!')
+            AskName()
         root2 = Tk()
         root2.title('Windows Setup')
         Label(root2,
               text='Убедитесь в правильности введенного Вами имени. Чтобы\nизменить его, выберите изменить. В противном случае,\nвыберите Продолжить.').grid(
             row=0, columnspan=4)
+        if password.rstrip() == '' and username.rstrip() == '':
+            messagebox.showerror('', 'Увы, но НУЖНО ВВОДИТЬ СВОЙ ПАРОЛЬ И ИМЯ!')
+            AskName()
         Label(root2, text='Имя:      %s' % username).grid(row=1, column=0)
-        Button(root2, text='Продолжить', command=next).grid(row=2, column=0)
-        Button(root2, text='Изменить', command=edit).grid(row=2, column=1)
-        Button(root2, command=lambda: sys.exit(), text='Выход из Setup').grid(row=2, column=2)
-        Button(root2, command=helpME, text='Справка').grid(row=2, column=3)
+        Label(root2, text='Пароль:      %s' % password).grid(row=2, column=0)
+        Button(root2, text='Продолжить', command=next).grid(row=3, column=0)
+        Button(root2, text='Изменить', command=edit).grid(row=3, column=1)
+        Button(root2, command=lambda: sys.exit(), text='Выход из Setup').grid(row=3, column=2)
+        Button(root2, command=helpME, text='Справка').grid(row=3, column=3)
         root2.mainloop()
 
     AskName()

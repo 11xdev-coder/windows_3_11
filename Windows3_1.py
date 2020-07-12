@@ -4,6 +4,8 @@ import sys
 import os
 import playsound
 import psutil
+from windows3_1_filemanager import DRIVE_LETTER_C
+from windows3_1_filemanager import DRIVE_LETTER_D
 from tkinter import messagebox
 from tkinter.ttk import Combobox
 import Windows3_1_setup
@@ -11,8 +13,9 @@ import windows3_1_run
 import windows3_1_filemanager
 
 Windows3_1_setup.setup()
-if not os.path.exists(windows3_1_filemanager.DRIVE_LETTER_C + 'win31\\windowsSetupEnds'):
-    messagebox.showerror('', 'Не удалось установить Windows. Попробуйте перезапустить установку Windows')
+if not os.path.exists(DRIVE_LETTER_C + 'win31\\windowsSetupEnds'):
+    messagebox.showerror('',
+                         'Не удалось установить Windows. Попробуйте перезапустить установку Windows')
     sys.exit()
 
 DISK = 'C:'
