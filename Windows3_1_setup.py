@@ -9,14 +9,14 @@ import webbrowser
 import sys
 
 try:
-    os.rmdir('C:\\win31\\windowsSetupEnds')
+    os.rmdir('.\\win31\\windowsSetupEnds')
 except:
     pass
 
-if not os.path.exists('C:\\win31'):
+if not os.path.exists('.\\win31'):
     messagebox.showerror('', 'Cannot start Install manager,try it later')
     sys.exit()
-if not os.path.exists('C:\\win31\\users'):
+if not os.path.exists('.\\win31\\users'):
     messagebox.showerror('', 'Cannot start Install manager,try it later')
     sys.exit()
 
@@ -24,16 +24,23 @@ if not os.path.exists('C:\\win31\\users'):
 def setup():
     def AskName():
         def sign_in():
-            if not os.path.exists('C:\\win31\\users\\%s' % namee.get()):
+            if not os.path.exists('.\\win31\\users\\%s' % namee.get()):
                 messagebox.showerror('','Такого пользователя не существует')
             else:
-                usernam = open('C:\\win31\\users\\%s\\username.txt' % namee.get(),'r')
-                passwo = open('C:\\win31\\users\\%s\\password.txt' % namee.get(),'r')
-                if usernam.readline() == namee.get() and passwo.readline() == passw.get():
-                    root.destroy()
-                    os.mkdir('C:\\win31\\windowsSetupEnds')
-                else:
-                    messagebox.showerror('','Некоректный пароль или имя!')
+                try:
+                    usernam = open('.\\win31\\users\\%s\\username.txt' % namee.get(),'r')
+                    passwo = open('.\\win31\\users\\%s\\password.txt' % namee.get(),'r')
+                    if usernam.readline() == namee.get() and passwo.readline() == passw.get():
+                        tu = open('.\\win31\\users\\currentUser.txt', 'w')
+                        tu.write(namee.get())
+                        tu.close()
+                        root.destroy()
+                        os.mkdir('.\\win31\\windowsSetupEnds')
+                    else:
+                        messagebox.showerror('','Некоректный пароль или имя!')
+                except:
+                    messagebox.showerror('','Некоректное имя пользователя')
+                    sys.exit()
 
         def next(event):
             MakeSureYourName(root, username=namee.get(), password=passw.get())
@@ -58,8 +65,7 @@ def setup():
         namee.grid(row=3, columnspan=3)
         passw = Entry(root, show='*')
         passw.grid(row=5, columnspan=3)
-        Button(root, command=lambda: nextbtn(namee.get(), passw.get()), text='Создать нового пользователя').grid(row=6,
-                                                                                                                 column=0)
+        Button(root, command=lambda: nextbtn(namee.get(), passw.get()), text='Создать нового пользователя').grid(row=6,column=0)
         Button(root, command=lambda: sys.exit(), text='Выход из Setup').grid(row=6, column=1)
         Button(root, command=helpME, text='Справка').grid(row=6, column=2)
         Button(root, command=sign_in, text='Войти').grid(row=6, column=3)
@@ -67,20 +73,23 @@ def setup():
         root.mainloop()
 
     def MakeSureYourName(rootForDestroy, username, password):
-        if os.path.exists('C:\\win31\\users\\%s' % username):
+        if os.path.exists('.\\win31\\users\\%s' % username):
             messagebox.showerror('', 'Пользователь с таки именем уже существует')
             rootForDestroy.destroy()
             AskName()
 
         def next():
             root2.destroy()
-            os.mkdir('C:\\win31\\users\\%s' % username)
-            f = open('C:\\win31\\users\\%s\\username.txt' % username, 'w')
+            os.mkdir('.\\win31\\users\\%s' % username)
+            f = open('.\\win31\\users\\%s\\username.txt' % username, 'w')
             f.write(username)
             f.close()
-            p = open('C:\\win31\\users\\%s\\password.txt' % username, 'w')
+            p = open('.\\win31\\users\\%s\\password.txt' % username, 'w')
             p.write(password)
             p.close()
+            tu = open('.\\win31\\users\\currentUser.txt','w')
+            tu.write(username)
+            tu.close()
             ApplicationInstallingNow = 'Календарь'
             FileInstallingNow = 'Calendar.exe'
             root3 = Tk()
@@ -198,14 +207,14 @@ def setup():
 
                 def restart():
                     def check():
-                        usern = open('C:\\win31\\users\\%s\\username.txt' % username, 'r')
-                        passwo = open('C:\\win31\\users\\%s\\password.txt' % username, 'r')
+                        usern = open('.\\win31\\users\\%s\\username.txt' % username, 'r')
+                        passwo = open('.\\win31\\users\\%s\\password.txt' % username, 'r')
                         if usern.read() == u.get() and passwo.read() == pa.get():
                             root6.destroy()
                         else:
                             messagebox.showerror('', 'Некоректный пароль или имя!')
 
-                    os.mkdir('C:\\win31\\windowsSetupEnds')
+                    os.mkdir('.\\win31\\windowsSetupEnds')
                     root5.destroy()
                     root6 = Tk()
                     root6.title('')

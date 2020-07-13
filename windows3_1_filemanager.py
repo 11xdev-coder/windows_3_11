@@ -25,7 +25,7 @@ def main():
         btn.grid()
         btn.bind('<Button-1>', detectfiles)
     Label(filemng, text='----------------------------------------------------------').grid()
-    m = Menu(filemng, tearoff=False)
+    m = Menu(filemng, tearoff=0)
     ni3 = Menu(m)
     ni3.add_command(label='Выход', command=lambda: filemng.destroy())
     m.add_cascade(label='Закрыть', menu=ni3)

@@ -4,24 +4,20 @@ import sys
 import os
 import playsound
 import psutil
-from windows3_1_filemanager import DRIVE_LETTER_C
-from windows3_1_filemanager import DRIVE_LETTER_D
 from tkinter import messagebox
 from tkinter.ttk import Combobox
 import Windows3_1_setup
 import windows3_1_run
 import windows3_1_filemanager
-from screeninfo import get_monitors
 
-for m in get_monitors():
-    pass
-
-width = m.width
-height = m.height
-ra = '%sx%s' % (width,height)
+rot = Tk()
+screen_width = rot.winfo_screenwidth()
+screen_height = rot.winfo_screenheight()
+ra = '%sx%s' % (screen_width,screen_height)
+rot.destroy()
 
 Windows3_1_setup.setup()
-if not os.path.exists(DRIVE_LETTER_C + 'win31\\windowsSetupEnds'):
+if not os.path.exists('.\\win31\\windowsSetupEnds'):
     messagebox.showerror('',
                          'Не удалось установить Windows. Попробуйте перезапустить установку Windows')
     sys.exit()
@@ -111,7 +107,7 @@ def create():
 
                 def fullscreen2():
                     if fullscreenbutton2['text'] == '>':
-                        c.geometry('2000x1500+0+0')
+                        c.geometry('%s+0+0' % ra)
                         fullscreenbutton2['text'] = '<>'
                         deiconifybutton2.place(x=1850, y=0)
                         fullscreenbutton2.place(x=1870, y=0)
@@ -135,8 +131,9 @@ def create():
                 fullscreenbutton2.place(x=470, y=0)
                 c.mainloop()
 
-            os.mkdir('C:\\win31\\%s' % o.get())
-            name = os.path.basename('C:\\win31\\%s' % o.get())
+            currentUser = open('.\\win31\\users\\currentUser.txt','r')
+            os.mkdir('.\\win31\\users\\%s\\%s' % (currentUser.readline(), o.get()))
+            name = os.path.basename('.\\win31\\users\\%s\\%s' % (currentUser.readline(), o.get()))
 
             group = Button(programmng, image=forAccessories, command=opencreatedfolder)
             group.bind('<Button-3>', fileMenu)
@@ -206,7 +203,7 @@ def mainAccessories():
     fullscreenbutton2.place(x=470, y=0)
     filemng = Button(mainWindow, image=filemngImg, command=lambda: windows3_1_filemanager.main())
     filemng.grid()
-    m = Menu(mainWindow, tearoff=False)
+    m = Menu(mainWindow, tearoff=0)
     ni3 = Menu(m)
     ni3.add_command(label='Выход', command=des)
     m.add_cascade(label='Закрыть', menu=ni3)
@@ -216,7 +213,7 @@ def mainAccessories():
 
 def fullscreen():
     if fullscreenbutton['text'] == '>':
-        programmng.geometry('2000x1500+0+0')
+        programmng.geometry('%s+0+0' % ra)
         fullscreenbutton['text'] = '<>'
         deiconifybutton.place(x=1850, y=0)
         fullscreenbutton.place(x=1870, y=0)
@@ -231,6 +228,7 @@ def closed():
     closewindows = messagebox.askyesno('Конец сеанса', 'Вы действительно хотите завершить сеанс?')
     if closewindows == True:
         playsound.playsound('CHIMES.wav')
+        desktop.destroy()
         sys.exit()
     else:
         pass
