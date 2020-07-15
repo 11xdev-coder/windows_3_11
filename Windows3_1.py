@@ -163,6 +163,9 @@ def create():
 
 
 def mainAccessories():
+    def filemngstart():
+        filemng.grid_forget()
+        windows3_1_filemanager.main(mainWindow, filemng)
     def des():
         mainWindow.destroy()
         mainButton.grid()
@@ -170,10 +173,10 @@ def mainAccessories():
 
     def fullscreen2():
         if fullscreenbutton2['text'] == '>':
-            mainWindow.geometry('2000x1500+0+0')
+            mainWindow.geometry(ra + '+0+0')
             fullscreenbutton2['text'] = '<>'
             deiconifybutton2.place(x=1850, y=0)
-            fullscreenbutton2.place(x=1870, y=0)
+            fullscreenbutton2.place(x=1875, y=0)
         elif fullscreenbutton2['text'] == '<>':
             mainWindow.geometry('500x500+0+0')
             fullscreenbutton2['text'] = '>'
@@ -201,7 +204,7 @@ def mainAccessories():
     deiconifybutton2.place(x=450, y=0)
     fullscreenbutton2 = Button(mainWindow, text='>', command=fullscreen2)
     fullscreenbutton2.place(x=470, y=0)
-    filemng = Button(mainWindow, image=filemngImg, command=lambda: windows3_1_filemanager.main())
+    filemng = Button(mainWindow, image=filemngImg, command=filemngstart)
     filemng.grid()
     m = Menu(mainWindow, tearoff=0)
     ni3 = Menu(m)
@@ -215,8 +218,8 @@ def fullscreen():
     if fullscreenbutton['text'] == '>':
         programmng.geometry('%s+0+0' % ra)
         fullscreenbutton['text'] = '<>'
-        deiconifybutton.place(x=1850, y=0)
-        fullscreenbutton.place(x=1870, y=0)
+        deiconifybutton.place(x=screen_width-65, y=0)
+        fullscreenbutton.place(x=screen_width-40, y=0)
     elif fullscreenbutton['text'] == '<>':
         programmng.geometry('500x500+0+0')
         fullscreenbutton['text'] = '>'
@@ -314,12 +317,12 @@ def content():
 
 deiconifybutton = Button(programmng, text='<', command=deiconfy)
 deiconifybutton.place(x=450, y=0)
+fullscreenbutton = Button(programmng, text='>', command=fullscreen)
+fullscreenbutton.place(x=470, y=0)
 mainButton = Button(programmng, image=forAccessories, command=mainAccessories)
 mainButton.grid(row=0, column=0)
 mainLbl = Label(programmng, text='Главный')
 mainLbl.grid(row=0, column=1)
-fullscreenbutton = Button(programmng, text='>', command=fullscreen)
-fullscreenbutton.place(x=470, y=0)
 programmng.title('Диспетчер программ')
 
 menu = Menu(programmng)
