@@ -25,11 +25,11 @@ def setup():
     def AskName():
         def sign_in():
             if not os.path.exists('.\\win31\\users\\%s' % namee.get()):
-                messagebox.showerror('','Такого пользователя не существует')
+                messagebox.showerror('', 'Такого пользователя не существует')
             else:
                 try:
-                    usernam = open('.\\win31\\users\\%s\\username.txt' % namee.get(),'r')
-                    passwo = open('.\\win31\\users\\%s\\password.txt' % namee.get(),'r')
+                    usernam = open('.\\win31\\users\\%s\\username.txt' % namee.get(), 'r')
+                    passwo = open('.\\win31\\users\\%s\\password.txt' % namee.get(), 'r')
                     if usernam.readline() == namee.get() and passwo.readline() == passw.get():
                         tu = open('.\\win31\\users\\currentUser.txt', 'w')
                         tu.write(namee.get())
@@ -37,9 +37,9 @@ def setup():
                         root.destroy()
                         os.mkdir('.\\win31\\windowsSetupEnds')
                     else:
-                        messagebox.showerror('','Некоректный пароль или имя!')
+                        messagebox.showerror('', 'Некоректный пароль или имя!')
                 except:
-                    messagebox.showerror('','Некоректное имя пользователя')
+                    messagebox.showerror('', 'Некоректное имя пользователя')
                     sys.exit()
 
         def next(event):
@@ -65,7 +65,8 @@ def setup():
         namee.grid(row=3, columnspan=3)
         passw = Entry(root, show='*')
         passw.grid(row=5, columnspan=3)
-        Button(root, command=lambda: nextbtn(namee.get(), passw.get()), text='Создать нового пользователя').grid(row=6,column=0)
+        Button(root, command=lambda: nextbtn(namee.get(), passw.get()), text='Создать нового пользователя').grid(row=6,
+                                                                                                                 column=0)
         Button(root, command=lambda: sys.exit(), text='Выход из Setup').grid(row=6, column=1)
         Button(root, command=helpME, text='Справка').grid(row=6, column=2)
         Button(root, command=sign_in, text='Войти').grid(row=6, column=3)
@@ -87,7 +88,7 @@ def setup():
             p = open('.\\win31\\users\\%s\\password.txt' % username, 'w')
             p.write(password)
             p.close()
-            tu = open('.\\win31\\users\\currentUser.txt','w')
+            tu = open('.\\win31\\users\\currentUser.txt', 'w')
             tu.write(username)
             tu.close()
             ApplicationInstallingNow = 'Календарь'

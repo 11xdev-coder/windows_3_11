@@ -13,7 +13,7 @@ import windows3_1_filemanager
 rot = Tk()
 screen_width = rot.winfo_screenwidth()
 screen_height = rot.winfo_screenheight()
-ra = '%sx%s' % (screen_width,screen_height)
+ra = '%sx%s' % (screen_width, screen_height)
 rot.destroy()
 
 Windows3_1_setup.setup()
@@ -131,7 +131,7 @@ def create():
                 fullscreenbutton2.place(x=470, y=0)
                 c.mainloop()
 
-            currentUser = open('.\\win31\\users\\currentUser.txt','r')
+            currentUser = open('.\\win31\\users\\currentUser.txt', 'r')
             os.mkdir('.\\win31\\users\\%s\\%s' % (currentUser.readline(), o.get()))
             name = os.path.basename('.\\win31\\users\\%s\\%s' % (currentUser.readline(), o.get()))
 
@@ -166,6 +166,7 @@ def mainAccessories():
     def filemngstart():
         filemng.grid_forget()
         windows3_1_filemanager.main(mainWindow, filemng)
+
     def des():
         mainWindow.destroy()
         mainButton.grid()
@@ -218,8 +219,8 @@ def fullscreen():
     if fullscreenbutton['text'] == '>':
         programmng.geometry('%s+0+0' % ra)
         fullscreenbutton['text'] = '<>'
-        deiconifybutton.place(x=screen_width-65, y=0)
-        fullscreenbutton.place(x=screen_width-40, y=0)
+        deiconifybutton.place(x=screen_width - 65, y=0)
+        fullscreenbutton.place(x=screen_width - 40, y=0)
     elif fullscreenbutton['text'] == '<>':
         programmng.geometry('500x500+0+0')
         fullscreenbutton['text'] = '>'

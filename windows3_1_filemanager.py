@@ -36,8 +36,7 @@ def fullscreen(fullscreenbutton2, deiconifybutton2, filemng3):
         fullscreenbutton2.place(x=470, y=0)
 
 
-def deiconfy(filemng3, root,imageFilemng):
-
+def deiconfy(filemng3, root, imageFilemng):
     def iconfy():
         filemng3.deiconify()
         filemngBtn.grid_forget()
@@ -53,7 +52,7 @@ def main(root, btn):
     filemng2 = Toplevel()
     filemng2.geometry('500x500')
     filemng2.title('Диспетчер Файлов')
-    deiconifybutton = Button(filemng2, text='<', command=lambda: deiconfy(filemng2, root,filemngImg))
+    deiconifybutton = Button(filemng2, text='<', command=lambda: deiconfy(filemng2, root, filemngImg))
     deiconifybutton.place(x=450, y=0)
     fullscreenbutton = Button(filemng2, text='>',
                               command=lambda: fullscreen(fullscreenbutton, deiconifybutton, filemng2))
@@ -73,6 +72,11 @@ def main(root, btn):
                 for d in range(len(files2)):
                     labelText += files2[d] + '\n'
                 detectfiles2 = Toplevel()
+                m2 = Menu(detectfiles2, tearoff=0)
+                ni32 = Menu(m2)
+                ni32.add_command(label='Выход', command=lambda: detectfiles2.destroy())
+                m2.add_cascade(label='Закрыть', menu=ni32)
+                detectfiles2.config(menu=m2)
                 detectfiles2.title(DRIVE_LETTER_C + event.widget.cget('text'))
                 detectfiles2.pack_propagate(False)
                 vscrollbar = Scrollbar(detectfiles2, orient=VERTICAL)
