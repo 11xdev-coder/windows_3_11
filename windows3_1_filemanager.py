@@ -95,7 +95,7 @@ def main(root, btn):
 
         files = os.listdir(DRIVE_LETTER_C)
         for i in range(len(files)):
-            if _has_hidden_attribute(DRIVE_LETTER_C + files[i]) == True:
+            if _has_hidden_attribute(DRIVE_LETTER_C + files[i]):
                 continue
             btn = Button(filemng2, text=files[i])
             btn.grid()
