@@ -57,7 +57,8 @@ def create():
                     group.grid_forget()
                     group.place_forget()
                     menuOffile.destroy()
-                    os.rmdir('C:\\win31\\%s' % name)
+                    currentUser2 = open('.\\win31\\users\\currentUser.txt', 'r')
+                    os.rmdir('.\\win31\\users\\%s\\%s' % (currentUser2.readline(),name))
 
                 def movebutton():
                     global stop
