@@ -163,54 +163,59 @@ def create():
             btn['state'] = 'disable'
 
 
+def des(mainwindow):
+    mainwindow.destroy()
+    mainButton.grid()
+    mainLbl.grid()
+
+
+def fullscreen2(fullscreenbutton2, deiconifybutton2, mainWindow):
+    if fullscreenbutton2['text'] == '>':
+        mainWindow.geometry(ra + '+0+0')
+        fullscreenbutton2['text'] = '<>'
+        deiconifybutton2.place(x=1850, y=0)
+        fullscreenbutton2.place(x=1875, y=0)
+    elif fullscreenbutton2['text'] == '<>':
+        mainWindow.geometry('500x500+0+0')
+        fullscreenbutton2['text'] = '>'
+        deiconifybutton2.place(x=450, y=0)
+        fullscreenbutton2.place(x=470, y=0)
+
+
+def filemngstart(filemng, mainWindow):
+    filemng.grid_forget()
+    windows3_1_filemanager.main(mainWindow, filemng)
+
+
+def iconfy2(mainWindow, mainButton2):
+    mainWindow.deiconify()
+    mainButton2.grid_forget()
+    mainLbl.grid_forget()
+
+
+def deiconfy2(mainWindow):
+    mainWindow.iconify()
+    mainButton2 = Button(programmng, image=forAccessories, command=lambda: iconfy2(mainWindow, mainButton2))
+    mainButton2.grid()
+    mainLbl.grid()
+
+
 def mainAccessories():
-    def filemngstart():
-        filemng.grid_forget()
-        windows3_1_filemanager.main(mainWindow, filemng)
-
-    def des():
-        mainWindow.destroy()
-        mainButton.grid()
-        mainLbl.grid()
-
-    def fullscreen2():
-        if fullscreenbutton2['text'] == '>':
-            mainWindow.geometry(ra + '+0+0')
-            fullscreenbutton2['text'] = '<>'
-            deiconifybutton2.place(x=1850, y=0)
-            fullscreenbutton2.place(x=1875, y=0)
-        elif fullscreenbutton2['text'] == '<>':
-            mainWindow.geometry('500x500+0+0')
-            fullscreenbutton2['text'] = '>'
-            deiconifybutton2.place(x=450, y=0)
-            fullscreenbutton2.place(x=470, y=0)
-
-    def deiconfy2():
-
-        def iconfy():
-            mainWindow.deiconify()
-            mainButton2.grid_forget()
-            mainLbl.grid_forget()
-
-        mainWindow.iconify()
-        mainButton2 = Button(programmng, image=forAccessories, command=iconfy)
-        mainButton2.grid()
-        mainLbl.grid()
-
     mainButton.grid_forget()
     mainLbl.grid_forget()
     mainWindow = Toplevel()
     mainWindow.geometry('500x500')
     mainWindow.title('Главный')
-    deiconifybutton2 = Button(mainWindow, text='<', command=deiconfy2)
+    deiconifybutton2 = Button(mainWindow, text='<', command=lambda: deiconfy2(mainWindow))
     deiconifybutton2.place(x=450, y=0)
-    fullscreenbutton2 = Button(mainWindow, text='>', command=fullscreen2)
+    fullscreenbutton2 = Button(mainWindow, text='>',
+                               command=lambda: fullscreen2(fullscreenbutton2, deiconifybutton2, mainWindow))
     fullscreenbutton2.place(x=470, y=0)
-    filemng = Button(mainWindow, image=filemngImg, command=filemngstart)
+    filemng = Button(mainWindow, image=filemngImg, command=lambda: filemngstart(filemng, mainWindow))
     filemng.grid()
     m = Menu(mainWindow, tearoff=0)
     ni3 = Menu(m)
-    ni3.add_command(label='Выход', command=des)
+    ni3.add_command(label='Выход', command=lambda: des(mainWindow))
     m.add_cascade(label='Закрыть', menu=ni3)
     mainWindow.config(menu=m)
     mainWindow.mainloop()
@@ -239,13 +244,14 @@ def closed():
         pass
 
 
-def deiconfy():
-    def iconfy():
-        programmng.deiconify()
-        iconifyProgramManager.grid_forget()
+def iconfy(iconifyProgramManager):
+    programmng.deiconify()
+    iconifyProgramManager.grid_forget()
 
+
+def deiconfy():
     programmng.iconify()
-    iconifyProgramManager = Button(desktop, image=IconProgramManager, command=iconfy)
+    iconifyProgramManager = Button(desktop, image=IconProgramManager, command=lambda: iconfy(iconifyProgramManager))
     iconifyProgramManager.grid()
 
 
@@ -300,12 +306,13 @@ def search():
     searchTk.mainloop()
 
 
-def content():
-    def autoarrange():
-        tkk = Tk()
-        tkk.title('Тут пусто,это тут не работает)')
-        tkk.mainloop()
+def autoarrange():
+    tkk = Tk()
+    tkk.title('Тут пусто,это тут не работает)')
+    tkk.mainloop()
 
+
+def content():
     contentTk = Toplevel()
     contentTk.title('Справка - Диспетчер программ')
     Button(contentTk, text='Назад', command=lambda: contentTk.destroy()).grid()

@@ -63,7 +63,7 @@ def setup():
         Label(root, text='Пароль: ').grid(row=4, columnspan=3)
         namee = Entry(root)
         namee.grid(row=3, columnspan=3)
-        passw = Entry(root, show='*')
+        passw = Entry(root, show='•')
         passw.grid(row=5, columnspan=3)
         Button(root, command=lambda: nextbtn(namee.get(), passw.get()), text='Создать нового пользователя').grid(row=6,
                                                                                                                  column=0)
