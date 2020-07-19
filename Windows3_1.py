@@ -39,6 +39,7 @@ messagebox.showerror('Не поддерживается драйвер ShowNames
                      'Не поддерживается драйвер ShowNamesOfCreatedFolders и поэтому имена папок которые вы сделали не будут показываться!')
 root.destroy()
 desktop = Tk()
+desktop.config(cursor='heart')
 programmng = Toplevel()
 programmng.geometry('500x500')
 IconProgramManager = PhotoImage(file='images/IconProgramManager.png')
