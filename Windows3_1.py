@@ -39,7 +39,6 @@ messagebox.showerror('Не поддерживается драйвер ShowNames
                      'Не поддерживается драйвер ShowNamesOfCreatedFolders и поэтому имена папок которые вы сделали не будут показываться!')
 root.destroy()
 desktop = Tk()
-desktop.config(cursor='heart')
 programmng = Toplevel()
 programmng.geometry('500x500')
 IconProgramManager = PhotoImage(file='images/IconProgramManager.png')
@@ -59,7 +58,7 @@ def create():
                     group.place_forget()
                     menuOffile.destroy()
                     currentUser2 = open('.\\win31\\users\\currentUser.txt', 'r')
-                    os.rmdir('.\\win31\\users\\%s\\%s' % (currentUser2.readline(),name))
+                    os.rmdir('.\\win31\\users\\%s\\%s' % (currentUser2.readline(), name))
 
                 def movebutton():
                     global stop
