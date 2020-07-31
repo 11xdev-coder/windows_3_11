@@ -3,8 +3,10 @@ from tkinter import messagebox
 import os
 import ctypes
 
-DRIVE_LETTER_C = 'C:\\'
-DRIVE_LETTER_D = 'D:\\'
+if os.name == 'nt':
+    DRIVE_LETTER_C = 'C:\\'
+else:
+    DRIVE_LETTER_C = '/home'
 labelText = ''
 tk = Tk()
 screen_width = tk.winfo_screenwidth()
@@ -59,8 +61,8 @@ def main(root, btn):
     fullscreenbutton.place(x=470, y=0)
 
     def с(btn2):
-        def des():
-            btn2.grid()
+        def des(event):
+            btn2.grid(row=0, column=0)
             filemng2.destroy()
 
         def detectfiles(event):
@@ -102,9 +104,10 @@ def main(root, btn):
             btn.bind('<Button-1>', detectfiles)
         m = Menu(filemng2, tearoff=0)
         ni3 = Menu(m)
-        ni3.add_command(label='Выход', command=des)
+        ni3.add_command(label='Выход', command=lambda: des(''))
         m.add_cascade(label='Закрыть', menu=ni3)
         filemng2.config(menu=m)
+        filemng2.bind('<Control-F4>', des)
         filemng2.mainloop()
 
     с(btn)

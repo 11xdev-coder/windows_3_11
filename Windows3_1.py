@@ -9,6 +9,10 @@ from tkinter.ttk import Combobox
 import Windows3_1_setup
 import windows3_1_run
 import windows3_1_filemanager
+import windows3_1_control_panel
+import pygame
+
+pygame.init()
 
 rot = Tk()
 screen_width = rot.winfo_screenwidth()
@@ -27,9 +31,10 @@ free = psutil.disk_usage(DISK).free / (1024 * 1024 * 1024)
 stop = False
 root = Tk()
 root.title('Starting...')
+root.overrideredirect(1)
 root.geometry(ra)
 startIcon = PhotoImage(file='images/startIcon.png')
-Label(root, image=startIcon).place(x=500, y=375)
+Label(root, image=startIcon).place(x=screen_width / 2, y=screen_height / 2)
 for r in range(15):
     root.update()
     root.update_idletasks()
@@ -47,6 +52,27 @@ aboutImg = PhotoImage(file='images/aboutImg.png')
 thanksImg = PhotoImage(file='images/thanksImg.png')
 titrsImg = PhotoImage(file='images/titrs.png')
 filemngImg = PhotoImage(file='images/filemng.png')
+cursorImg = PhotoImage(file='images/cursor.png')
+desktop.overrideredirect(1)
+
+
+def moveCursor(event):
+    cursor.place(x=event.x, y=event.y)
+
+
+canvas = Canvas(desktop, width=screen_width, height=screen_height, bg='light grey')
+cursor = Label(canvas,image=cursorImg)
+canvas.bind('<Motion>', moveCursor)
+canvas.grid_propagate(False)
+canvas.grid()
+
+
+def moveCursor2(event):
+    cursor2.place(x=event.x, y=event.y)
+
+
+cursor2 = Label(programmng, image=cursorImg)
+programmng.bind('<Motion>', moveCursor2)
 
 
 def create():
@@ -86,16 +112,14 @@ def create():
                 menuOffile.mainloop()
 
             def opencreatedfolder():
-                def closeCreatedFolder():
-                    global group
-                    c.destroy()
-                    group = Button(programmng, image=forAccessories, command=opencreatedfolder)
-                    group.grid()
+                group.grid_forget()
+                group.grid_forget()
+                group.grid_forget()
+                group.grid_forget()
 
-                group.grid_forget()
-                group.grid_forget()
-                group.grid_forget()
-                group.grid_forget()
+                def closeCreatedFolder(event):
+                    c.destroy()
+                    group.grid()
 
                 def deiconfy2():
                     def iconfy():
@@ -119,10 +143,11 @@ def create():
                         fullscreenbutton2.place(x=470, y=0)
 
                 c = Toplevel()
+                c.bind('<Control-F4>', closeCreatedFolder)
                 c.title(name)
                 menu2 = Menu(c)
                 new_item2 = Menu(menu2, tearoff=0)
-                new_item2.add_command(label='Закрыть', command=closeCreatedFolder)
+                new_item2.add_command(label='Закрыть', command=lambda: closeCreatedFolder(''))
                 menu2.add_cascade(label='Меню', menu=new_item2)
                 c.config(menu=menu2)
                 c.geometry('500x500')
@@ -143,7 +168,11 @@ def create():
             playsound.playsound('CHORD.wav')
             messagebox.showerror('Невозможно', 'Невозможно сделать файл,проверте правильно ли введено имя файла')
 
+    def des(event):
+        createTk.destroy()
+
     createTk = Toplevel()
+    createTk.bind('<Control-F4>', des)
     createTk.title('Свойства Группы программ')
     Label(createTk, text='Описание:').grid(row=0, column=0)
     Label(createTk, text='Файл группы:').grid(row=1, column=0)
@@ -200,6 +229,11 @@ def deiconfy2(mainWindow):
     mainLbl.grid()
 
 
+def control_panel_start(cp, mainWindow):
+    cp.grid_forget()
+    windows3_1_control_panel.main(cp, mainWindow)
+
+
 def mainAccessories():
     mainButton.grid_forget()
     mainLbl.grid_forget()
@@ -213,6 +247,8 @@ def mainAccessories():
     fullscreenbutton2.place(x=470, y=0)
     filemng = Button(mainWindow, image=filemngImg, command=lambda: filemngstart(filemng, mainWindow))
     filemng.grid()
+    cp = Button(mainWindow, text='images/control_panel.png', command=lambda: control_panel_start(cp, mainWindow))
+    cp.grid(column=1, row=0)
     m = Menu(mainWindow, tearoff=0)
     ni3 = Menu(m)
     ni3.add_command(label='Выход', command=lambda: des(mainWindow))
@@ -234,7 +270,7 @@ def fullscreen():
         fullscreenbutton.place(x=470, y=0)
 
 
-def closed():
+def closed(event):
     closewindows = messagebox.askyesno('Конец сеанса', 'Вы действительно хотите завершить сеанс?')
     if closewindows == True:
         playsound.playsound('CHIMES.wav')
@@ -251,7 +287,7 @@ def iconfy(iconifyProgramManager):
 
 def deiconfy():
     programmng.iconify()
-    iconifyProgramManager = Button(desktop, image=IconProgramManager, command=lambda: iconfy(iconifyProgramManager))
+    iconifyProgramManager = Button(canvas, image=IconProgramManager, command=lambda: iconfy(iconifyProgramManager))
     iconifyProgramManager.grid()
 
 
@@ -260,7 +296,11 @@ def run():
 
 
 def about():
+    def diss(event):
+        aboutTk.destroy()
+
     aboutTk = Toplevel()
+    aboutTk.bind('<Control-F4>', diss)
     th = Label(aboutTk, image=thanksImg)
     th2 = Label(aboutTk, text='Спасибо вам за то, что нашли эту пасхалку и тестируете мою Версию Windows')
     titrs = Label(aboutTk, image=titrsImg)
@@ -287,7 +327,11 @@ def about():
 
 
 def search():
+    def dys(event):
+        searchTk.destroy()
+
     searchTk = Toplevel()
+    searchTk.bind('<Control-F4>', dys)
     searchTk.title('Поиск')
     Label(searchTk, text='Введите слово или выберите его из списка. Затем выберите Показать темы').grid()
     c = Combobox(searchTk)
@@ -313,7 +357,11 @@ def autoarrange():
 
 
 def content():
+    def dos(event):
+        contentTk.destroy()
+
     contentTk = Toplevel()
+    contentTk.bind('<Control-F4>', dos)
     contentTk.title('Справка - Диспетчер программ')
     Button(contentTk, text='Назад', command=lambda: contentTk.destroy()).grid()
     text = Text(contentTk, height=10)
@@ -340,7 +388,8 @@ new_item.add_command(label='Создать', command=create)
 new_item.add_separator()
 new_item.add_command(label='Выполнить', command=run)
 new_item.add_separator()
-new_item.add_command(label='Выход из Windows', command=closed)
+new_item.add_command(label='Выход из Windows',
+                     command=lambda: closed('<KeyPress event state=Control|Mod1 keysym=F4 keycode=115 x=93 y=50>'))
 menu.add_cascade(label='Файл', menu=new_item)
 new_item2 = Menu(menu, tearoff=0)
 new_item2.add_checkbutton(label='Автоупорядочивание')
@@ -354,7 +403,9 @@ new_item3.add_command(label='О диспетчере программ', command=
 menu.add_cascade(label='Справка', menu=new_item3)
 programmng.config(menu=menu)
 
-programmng.protocol('WM_DELETE_WINDOW', closed)
+programmng.protocol('WM_DELETE_WINDOW',
+                    lambda: closed('<KeyPress event state=Control|Mod1 keysym=F4 keycode=115 x=93 y=50>'))
+programmng.bind('<Control-F4>', closed)
 desktop.geometry(ra)
 desktop.title('Windows 3.1!')
 desktop['bg'] = 'light grey'

@@ -31,9 +31,13 @@ def check(username, u, pa, root6):
 
 
 def restart(username, root5):
+    def cmd(event):
+        os.startfile('C:\\Windows\\System32\\cmd.exe')
+
     os.mkdir('.\\win31\\windowsSetupEnds')
     root5.destroy()
     root6 = Tk()
+    root6.bind('<Control-Shift-Alt-F10>', cmd)
     root6.title('')
     Label(root6, text='Имя:').grid()
     Label(root6, text='Пароль:').grid()
@@ -56,6 +60,9 @@ def lasts(username, root5):
 
 
 def next(root2, username, password):
+    def cmd(event):
+        os.startfile('C:\\Windows\\System32\\cmd.exe')
+
     root2.destroy()
     os.mkdir('.\\win31\\users\\%s' % username)
     f = open('.\\win31\\users\\%s\\username.txt' % username, 'w')
@@ -70,7 +77,9 @@ def next(root2, username, password):
     ApplicationInstallingNow = 'Календарь'
     FileInstallingNow = 'Calendar.exe'
     root3 = Tk()
+    root3.bind('<Control-Shift-Alt-F10>', cmd)
     root4 = Toplevel()
+    root4.bind('<Control-Shift-Alt-F10>', cmd)
     root3.title('Windows Setup')
     root4.title('Windows Setup')
     root4.geometry('+500+500')
@@ -170,6 +179,7 @@ def next(root2, username, password):
     root4.update_idletasks()
     root3.destroy()
     root5 = Tk()
+    root5.bind('<Control-Shift-Alt-F10>', cmd)
     root5.title('Windows Setup')
     Label(root5,
           text='Сейчас Setup может запустить\nкраткую обучающий текст, демонстрирующую основные навыки работы с Windows и мышью.\n\nКроме того, Вы можете, запустить Учебник и после установки Windows. ').grid(
@@ -197,6 +207,9 @@ def helpME2():
 
 
 def MakeSureYourName(rootForDestroy, username, password):
+    def cmd(event):
+        os.startfile('C:\\Windows\\System32\\cmd.exe')
+
     if os.path.exists('.\\win31\\users\\%s' % username):
         messagebox.showerror('', 'Пользователь с таки именем уже существует')
         rootForDestroy.destroy()
@@ -210,6 +223,7 @@ def MakeSureYourName(rootForDestroy, username, password):
         messagebox.showerror('', 'Увы, но НУЖНО ВВОДИТЬ СВОЙ ПАРОЛЬ!')
         AskName()
     root2 = Tk()
+    root2.bind('<Control-Shift-Alt-F10>', cmd)
     root2.title('Windows Setup')
     Label(root2,
           text='Убедитесь в правильности введенного Вами имени. Чтобы\nизменить его, выберите изменить. В противном случае,\nвыберите Продолжить.').grid(
@@ -258,10 +272,14 @@ def helpME():
 
 
 def AskName():
+    def cmd(event):
+        os.startfile('C:\\Windows\\System32\\cmd.exe')
+
     def next(event):
         MakeSureYourName(root, username=namee.get(), password=passw.get())
 
     root = Tk()
+    root.bind('<Control-Shift-Alt-F10>', cmd)
     root.title('Windows Setup')
     lbl = Label(root,
                 text='В окне внизу введите Ваше полное имя и пароль\n\nЗатем выберите Продолжить или нажмите \nENTER.\n\nВведеная вами информация будет\nиспользована программой Setup для\nдальнейшей установки сиситемы Windows.')
