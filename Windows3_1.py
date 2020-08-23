@@ -2,6 +2,7 @@ from tkinter import *
 import time
 import sys
 import os
+import math
 import playsound
 import psutil
 from tkinter import messagebox
@@ -61,7 +62,7 @@ def moveCursor(event):
 
 
 canvas = Canvas(desktop, width=screen_width, height=screen_height, bg='light grey')
-cursor = Label(canvas,image=cursorImg)
+cursor = Label(desktop, image=cursorImg)
 canvas.bind('<Motion>', moveCursor)
 canvas.grid_propagate(False)
 canvas.grid()
@@ -75,99 +76,106 @@ cursor2 = Label(programmng, image=cursorImg)
 programmng.bind('<Motion>', moveCursor2)
 
 
+def iconfy3(c, group):
+    c.deiconify()
+    group.grid_forget()
+
+
+def deiconfy3(c):
+    c.iconify()
+    group = Button(programmng, image=forAccessories, command=lambda: iconfy3(c, group))
+    group.grid()
+
+
+def fullscreen3(fullscreenbutton2, c, deiconifybutton2):
+    if fullscreenbutton2['text'] == '>':
+        c.geometry('%s+0+0' % ra)
+        fullscreenbutton2['text'] = '<>'
+        deiconifybutton2.place(x=screen_width-65, y=0)
+        fullscreenbutton2.place(x=screen_width-40, y=0)
+    elif fullscreenbutton2['text'] == '<>':
+        c.geometry('500x500+0+0')
+        fullscreenbutton2['text'] = '>'
+        deiconifybutton2.place(x=450, y=0)
+        fullscreenbutton2.place(x=470, y=0)
+
+
+def opencreatedfolder(group, name):
+    group.grid_forget()
+    group.grid_forget()
+    group.grid_forget()
+    group.grid_forget()
+
+    def closeCreatedFolder(event):
+        c.destroy()
+        group.grid()
+
+    c = Toplevel()
+    c.bind('<Control-F4>', closeCreatedFolder)
+    c.title(name)
+    menu2 = Menu(c)
+    new_item2 = Menu(menu2, tearoff=0)
+    new_item2.add_command(label='Закрыть', command=lambda: closeCreatedFolder(''))
+    menu2.add_cascade(label='Меню', menu=new_item2)
+    c.config(menu=menu2)
+    c.geometry('500x500')
+    deiconifybutton2 = Button(c, text='<', command=lambda: deiconfy3(c))
+    deiconifybutton2.place(x=450, y=0)
+    fullscreenbutton2 = Button(c, text='>', command=lambda: fullscreen3(fullscreenbutton2, c, deiconifybutton2))
+    fullscreenbutton2.place(x=470, y=0)
+    c.mainloop()
+
+
+def dltFile(group, menuOffile, name):
+    group.grid_forget()
+    group.place_forget()
+    menuOffile.destroy()
+    currentUser2 = open('.\\win31\\users\\currentUser.txt', 'r')
+    os.rmdir('.\\win31\\users\\%s\\%s' % (currentUser2.readline(), name))
+
+
+def stopmove():
+    global stop
+    stop = True
+
+
+def movebutton(group, menuOffile):
+    global stop
+    stop = False
+
+    def movebutton2(event):
+        global stop
+        Okmovebtn = Button(menuOffile, command=stopmove, text='Ок')
+        Okmovebtn.grid(row=0, column=1)
+        if not stop:
+            group.place(x=event.x, y=event.y)
+
+    programmng.bind('<B1-Motion>', movebutton2)
+
+
+def nextcreate(o):
+    try:
+        def fileMenu(event):
+            menuOffile = Toplevel()
+            moveBtn = Button(menuOffile, text='Переместить', command=lambda: movebutton(group, menuOffile))
+            moveBtn.grid()
+            dltBtn = Button(menuOffile, text='Удалить', command=lambda: dltFile(group, menuOffile, name))
+            dltBtn.grid()
+            menuOffile.mainloop()
+
+        currentUser = open('.\\win31\\users\\currentUser.txt', 'r')
+        os.mkdir('.\\win31\\users\\%s\\%s' % (currentUser.readline(), o.get()))
+        name = os.path.basename('.\\win31\\users\\%s\\%s' % (currentUser.readline(), o.get()))
+
+        group = Button(programmng, image=forAccessories, command=lambda: opencreatedfolder(group, name))
+        group.bind('<Button-3>', fileMenu)
+        group.grid()
+    except:
+        playsound.playsound('CHORD.wav')
+        messagebox.showerror('Невозможно', 'Невозможно сделать файл,проверте правильно ли введено имя файла')
+
+
 def create():
-    def nextcreate():
-        try:
-            def fileMenu(event):
-                def dltFile():
-                    group.grid_forget()
-                    group.place_forget()
-                    menuOffile.destroy()
-                    currentUser2 = open('.\\win31\\users\\currentUser.txt', 'r')
-                    os.rmdir('.\\win31\\users\\%s\\%s' % (currentUser2.readline(), name))
-
-                def movebutton():
-                    global stop
-                    stop = False
-
-                    def movebutton2(event):
-                        global stop
-
-                        def stopmove():
-                            global stop
-                            stop = True
-
-                        Okmovebtn = Button(menuOffile, command=stopmove, text='Ок')
-                        Okmovebtn.grid(row=0, column=1)
-                        if not stop:
-                            group.place(x=event.x, y=event.y)
-
-                    programmng.bind('<B1-Motion>', movebutton2)
-
-                menuOffile = Toplevel()
-                moveBtn = Button(menuOffile, text='Переместить', command=movebutton)
-                moveBtn.grid()
-                dltBtn = Button(menuOffile, text='Удалить', command=dltFile)
-                dltBtn.grid()
-                menuOffile.mainloop()
-
-            def opencreatedfolder():
-                group.grid_forget()
-                group.grid_forget()
-                group.grid_forget()
-                group.grid_forget()
-
-                def closeCreatedFolder(event):
-                    c.destroy()
-                    group.grid()
-
-                def deiconfy2():
-                    def iconfy():
-                        c.deiconify()
-                        group.grid_forget()
-
-                    c.iconify()
-                    group = Button(programmng, image=forAccessories, command=iconfy)
-                    group.grid()
-
-                def fullscreen2():
-                    if fullscreenbutton2['text'] == '>':
-                        c.geometry('%s+0+0' % ra)
-                        fullscreenbutton2['text'] = '<>'
-                        deiconifybutton2.place(x=1850, y=0)
-                        fullscreenbutton2.place(x=1870, y=0)
-                    elif fullscreenbutton2['text'] == '<>':
-                        c.geometry('500x500+0+0')
-                        fullscreenbutton['text'] = '>'
-                        deiconifybutton2.place(x=450, y=0)
-                        fullscreenbutton2.place(x=470, y=0)
-
-                c = Toplevel()
-                c.bind('<Control-F4>', closeCreatedFolder)
-                c.title(name)
-                menu2 = Menu(c)
-                new_item2 = Menu(menu2, tearoff=0)
-                new_item2.add_command(label='Закрыть', command=lambda: closeCreatedFolder(''))
-                menu2.add_cascade(label='Меню', menu=new_item2)
-                c.config(menu=menu2)
-                c.geometry('500x500')
-                deiconifybutton2 = Button(c, text='<', command=deiconfy2)
-                deiconifybutton2.place(x=450, y=0)
-                fullscreenbutton2 = Button(c, text='>', command=fullscreen2)
-                fullscreenbutton2.place(x=470, y=0)
-                c.mainloop()
-
-            currentUser = open('.\\win31\\users\\currentUser.txt', 'r')
-            os.mkdir('.\\win31\\users\\%s\\%s' % (currentUser.readline(), o.get()))
-            name = os.path.basename('.\\win31\\users\\%s\\%s' % (currentUser.readline(), o.get()))
-
-            group = Button(programmng, image=forAccessories, command=opencreatedfolder)
-            group.bind('<Button-3>', fileMenu)
-            group.grid()
-        except:
-            playsound.playsound('CHORD.wav')
-            messagebox.showerror('Невозможно', 'Невозможно сделать файл,проверте правильно ли введено имя файла')
-
     def des(event):
         createTk.destroy()
 
@@ -180,7 +188,7 @@ def create():
     o.grid(row=0, column=1)
     f = Entry(createTk)
     f.grid(row=1, column=1)
-    btn = Button(createTk, text='OK', state='disable', command=nextcreate)
+    btn = Button(createTk, text='OK', state='disable', command=lambda: nextcreate(o))
     btn.grid(row=0, column=2)
     Button(createTk, text='Отменить', command=lambda: createTk.destroy()).grid(row=1, column=2)
     while True:
@@ -229,9 +237,9 @@ def deiconfy2(mainWindow):
     mainLbl.grid()
 
 
-def control_panel_start(cp, mainWindow):
+def control_panel_start(cp, mainWindow, cnvs):
     cp.grid_forget()
-    windows3_1_control_panel.main(cp, mainWindow)
+    windows3_1_control_panel.main(cp, mainWindow, canvas)
 
 
 def mainAccessories():
@@ -247,7 +255,7 @@ def mainAccessories():
     fullscreenbutton2.place(x=470, y=0)
     filemng = Button(mainWindow, image=filemngImg, command=lambda: filemngstart(filemng, mainWindow))
     filemng.grid()
-    cp = Button(mainWindow, text='images/control_panel.png', command=lambda: control_panel_start(cp, mainWindow))
+    cp = Button(mainWindow, text='images/control_panel.png', command=lambda: control_panel_start(cp, mainWindow, canvas))
     cp.grid(column=1, row=0)
     m = Menu(mainWindow, tearoff=0)
     ni3 = Menu(m)

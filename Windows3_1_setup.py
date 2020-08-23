@@ -74,6 +74,8 @@ def next(root2, username, password):
     tu = open('.\\win31\\users\\currentUser.txt', 'w')
     tu.write(username)
     tu.close()
+    bg = open('.\\win31\\users\\%s\\currentBg.txt' % username, 'w')
+    bg.close()
     ApplicationInstallingNow = 'Календарь'
     FileInstallingNow = 'Calendar.exe'
     root3 = Tk()

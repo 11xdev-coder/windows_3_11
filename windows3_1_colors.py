@@ -1,4 +1,6 @@
 from tkinter import *
+import HoverInfo
+import math
 
 
 def iconfy(root, iconifybutton):
@@ -25,13 +27,33 @@ def fullscreen(root, ra, deiconifybutton, fullscreenbutton, screen_width):
         fullscreenbutton.place(x=470, y=0)
 
 
-def selectbg():
-    root2 = Toplevel()
+def selectbg1(MainCanvas, bgForCanvas, screen_width, screen_height):
+    w = bgForCanvas.width()
+    h = bgForCanvas.height()
+    for x in range(math.floor(screen_width / 10)):
+        for y in range(math.floor(screen_height / 10)):
+            MainCanvas.create_image(x * w, y * h, image=bgForCanvas, anchor=NW)
+    MainCanvas['bg'] = 'green'
+    currentUser = open('.\\win31\\users\\currentUser.txt')
+    currentBg = open('.\\win31\\users\\%s\\currentBg.txt' % currentUser.readline(), 'w')
+    currentBg.write('bg1.png')
+    currentBg.close()
+    currentUser.close()
+    MainCanvas.update()
+    MainCanvas.update_idletasks()
 
+
+def selectbg(cnvs, screen_width, screen_height):
+    bg1img = PhotoImage(file='images/bg1.png')
+    root2 = Toplevel()
+    root2.title('Фон')
+    Label(root2, text='Выберите фон').grid()
+    btn1 = Button(root2, image=bg1img, command=lambda: selectbg1(cnvs, bg1img, screen_width, screen_height))
+    btn1.grid(row=1)
     root2.mainloop()
 
 
-def main(colors, cp):
+def main(colors, cp, canvas):
     bgImg = PhotoImage(file='images/background.png')
 
     def des(event):
@@ -44,7 +66,9 @@ def main(colors, cp):
     ra = '%sx%s' % (screen_width, screen_height)
     root.title('Цвета')
     root.geometry('500x500')
-    bg = Button(root, image=bgImg, command=selectbg)
+    bg = Button(root, image=bgImg, command=lambda: selectbg(canvas, screen_width, screen_height))
+    hover = HoverInfo.HoverInfo(bg, 'Select a background')
+    bg.grid(row=0, column=0)
     deiconifybutton = Button(root, text='<', command=lambda: deiconfy(root, cp))
     deiconifybutton.place(x=450, y=0)
     fullscreenbutton = Button(root, text='>',
