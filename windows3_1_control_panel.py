@@ -1,4 +1,5 @@
 from tkinter import *
+from PIL import Image, ImageTk
 import windows3_1_colors
 
 
@@ -37,6 +38,10 @@ def colorsstart(colors, cp, MainCanvas):
 
 
 def main(cp, mainWindow, cnvs):
+    imgcolors = Image.open('images/colors.png')
+    imgcolors = imgcolors.resize((104, 74), Image.ANTIALIAS)
+    colorsimg = ImageTk.PhotoImage(imgcolors)
+
     def des2(event):
         root.destroy()
         cp.grid(row=0, column=1)
@@ -52,7 +57,7 @@ def main(cp, mainWindow, cnvs):
     fullscreenbutton = Button(root, text='>',
                               command=lambda: fullscreen(root, ra, deiconifybutton, fullscreenbutton, screen_width))
     fullscreenbutton.place(x=470, y=0)
-    colors = Button(root, text='images/colors.png', command=lambda: colorsstart(colors, root, cnvs))
+    colors = Button(root, image=colorsimg, command=lambda: colorsstart(colors, root, cnvs))
     colors.grid(row=0, column=0)
     m = Menu(root, tearoff=0)
     ni3 = Menu(m)

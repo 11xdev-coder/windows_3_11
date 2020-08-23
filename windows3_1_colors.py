@@ -9,8 +9,9 @@ def iconfy(root, iconifybutton):
 
 
 def deiconfy(root, cp):
+    colorsimg = PhotoImage(file='images/colors.png')
     root.iconify()
-    iconfybutton = Button(cp, text='images/colors.png', command=lambda: iconfy(root, iconfybutton))
+    iconfybutton = Button(cp, image=colorsimg, command=lambda: iconfy(root, iconfybutton))
     iconfybutton.grid(row=0, column=0)
 
 

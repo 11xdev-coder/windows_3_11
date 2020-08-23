@@ -12,6 +12,7 @@ import windows3_1_run
 import windows3_1_filemanager
 import windows3_1_control_panel
 import pygame
+from PIL import Image, ImageTk
 
 pygame.init()
 
@@ -46,6 +47,7 @@ messagebox.showerror('Не поддерживается драйвер ShowNames
 root.destroy()
 desktop = Tk()
 programmng = Toplevel()
+programmng.wm_attributes('-topmost', 1)
 programmng.geometry('500x500')
 IconProgramManager = PhotoImage(file='images/IconProgramManager.png')
 forAccessories = PhotoImage(file='images/IconForAccessories.png')
@@ -54,6 +56,9 @@ thanksImg = PhotoImage(file='images/thanksImg.png')
 titrsImg = PhotoImage(file='images/titrs.png')
 filemngImg = PhotoImage(file='images/filemng.png')
 cursorImg = PhotoImage(file='images/cursor.png')
+imgcp = Image.open('images/control_panel.png')
+imgcp = imgcp.resize((104, 74), Image.ANTIALIAS)
+cpimg = ImageTk.PhotoImage(imgcp)
 desktop.overrideredirect(1)
 
 
@@ -255,7 +260,7 @@ def mainAccessories():
     fullscreenbutton2.place(x=470, y=0)
     filemng = Button(mainWindow, image=filemngImg, command=lambda: filemngstart(filemng, mainWindow))
     filemng.grid()
-    cp = Button(mainWindow, text='images/control_panel.png', command=lambda: control_panel_start(cp, mainWindow, canvas))
+    cp = Button(mainWindow, image=cpimg, command=lambda: control_panel_start(cp, mainWindow, canvas))
     cp.grid(column=1, row=0)
     m = Menu(mainWindow, tearoff=0)
     ni3 = Menu(m)
