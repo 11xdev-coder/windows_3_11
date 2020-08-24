@@ -28,7 +28,7 @@ def fullscreen(root, ra, deiconifybutton, fullscreenbutton, screen_width):
         fullscreenbutton.place(x=470, y=0)
 
 
-def selectbg1(MainCanvas, bgForCanvas, screen_width, screen_height):
+def takebg(MainCanvas, bgForCanvas, screen_width, screen_height):
     w = bgForCanvas.width()
     h = bgForCanvas.height()
     for x in range(math.floor(screen_width / 10)):
@@ -44,13 +44,23 @@ def selectbg1(MainCanvas, bgForCanvas, screen_width, screen_height):
     MainCanvas.update_idletasks()
 
 
-def selectbg(cnvs, screen_width, screen_height):
+def selectbg1(cnvs, screen_width, screen_height, bg1):
+    bg1.grid_forget()
+    def des(event):
+        root2.destroy()
+        bg1.grid(row=0, column=0)
     bg1img = PhotoImage(file='images/bg1.png')
     root2 = Toplevel()
     root2.title('Фон')
     Label(root2, text='Выберите фон').grid()
-    btn1 = Button(root2, image=bg1img, command=lambda: selectbg1(cnvs, bg1img, screen_width, screen_height))
+    btn1 = Button(root2, image=bg1img, command=lambda: takebg(cnvs, bg1img, screen_width, screen_height))
     btn1.grid(row=1)
+    m2 = Menu(root2, tearoff=0)
+    ni4 = Menu(m2)
+    ni4.add_command(label='Выход', command=lambda: des(''))
+    m2.add_cascade(label='Закрыть', menu=ni4)
+    root2.config(menu=m2)
+    root2.bind('<Control-F4>', des)
     root2.mainloop()
 
 
@@ -67,9 +77,9 @@ def main(colors, cp, canvas):
     ra = '%sx%s' % (screen_width, screen_height)
     root.title('Цвета')
     root.geometry('500x500')
-    bg = Button(root, image=bgImg, command=lambda: selectbg(canvas, screen_width, screen_height))
-    hover = HoverInfo.HoverInfo(bg, 'Select a background')
-    bg.grid(row=0, column=0)
+    bg1 = Button(root, image=bgImg, command=lambda: selectbg1(canvas, screen_width, screen_height,bg1))
+    hover = HoverInfo.HoverInfo(bg1, 'Select a background')
+    bg1.grid(row=0, column=0)
     deiconifybutton = Button(root, text='<', command=lambda: deiconfy(root, cp))
     deiconifybutton.place(x=450, y=0)
     fullscreenbutton = Button(root, text='>',

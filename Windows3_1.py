@@ -47,6 +47,7 @@ messagebox.showerror('Не поддерживается драйвер ShowNames
 root.destroy()
 desktop = Tk()
 programmng = Toplevel()
+programmng.iconbitmap("bitmap images/WINTU002.ICO")
 programmng.wm_attributes('-topmost', 1)
 programmng.geometry('500x500')
 IconProgramManager = PhotoImage(file='images/IconProgramManager.png')

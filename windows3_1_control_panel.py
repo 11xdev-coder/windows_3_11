@@ -1,4 +1,5 @@
 from tkinter import *
+import HoverInfo
 from PIL import Image, ImageTk
 import windows3_1_colors
 
@@ -58,6 +59,7 @@ def main(cp, mainWindow, cnvs):
                               command=lambda: fullscreen(root, ra, deiconifybutton, fullscreenbutton, screen_width))
     fullscreenbutton.place(x=470, y=0)
     colors = Button(root, image=colorsimg, command=lambda: colorsstart(colors, root, cnvs))
+    h = HoverInfo.HoverInfo(colors,'Changes the Windows screen colors')
     colors.grid(row=0, column=0)
     m = Menu(root, tearoff=0)
     ni3 = Menu(m)
