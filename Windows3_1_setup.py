@@ -37,6 +37,7 @@ def restart(username, root5):
     os.mkdir('.\\win31\\windowsSetupEnds')
     root5.destroy()
     root6 = Tk()
+    root6.iconbitmap("bitmap images/LOGON001.ICO")
     root6.bind('<Control-Shift-Alt-F10>', cmd)
     root6.title('')
     Label(root6, text='Имя:').grid()
@@ -52,6 +53,7 @@ def restart(username, root5):
 
 def lasts(username, root5):
     lastIcon = Toplevel()
+    lastIcon.iconbitmap("bitmap images/WINSE001.ICO")
     lastIcon.title('Windows setup ends!')
 
     Button(lastIcon, text='Перезагрузить', command=lambda: restart(username, root5)).grid(row=0, column=0)
@@ -79,8 +81,10 @@ def next(root2, username, password):
     ApplicationInstallingNow = 'Календарь'
     FileInstallingNow = 'Calendar.exe'
     root3 = Tk()
+    root3.iconbitmap("bitmap images/WINSE001.ICO")
     root3.bind('<Control-Shift-Alt-F10>', cmd)
     root4 = Toplevel()
+    root4.iconbitmap("bitmap images/WINSE001.ICO")
     root4.bind('<Control-Shift-Alt-F10>', cmd)
     root3.title('Windows Setup')
     root4.title('Windows Setup')
@@ -181,6 +185,7 @@ def next(root2, username, password):
     root4.update_idletasks()
     root3.destroy()
     root5 = Tk()
+    root5.iconbitmap("bitmap images/WINSE001.ICO")
     root5.bind('<Control-Shift-Alt-F10>', cmd)
     root5.title('Windows Setup')
     Label(root5,
@@ -225,6 +230,7 @@ def MakeSureYourName(rootForDestroy, username, password):
         messagebox.showerror('', 'Увы, но НУЖНО ВВОДИТЬ СВОЙ ПАРОЛЬ!')
         AskName()
     root2 = Tk()
+    root2.iconbitmap("bitmap images/PROGM038.ICO")
     root2.bind('<Control-Shift-Alt-F10>', cmd)
     root2.title('Windows Setup')
     Label(root2,
@@ -281,6 +287,7 @@ def AskName():
         MakeSureYourName(root, username=namee.get(), password=passw.get())
 
     root = Tk()
+    root.iconbitmap("bitmap images/LOGON001.ICO")
     root.bind('<Control-Shift-Alt-F10>', cmd)
     root.title('Windows Setup')
     lbl = Label(root,
