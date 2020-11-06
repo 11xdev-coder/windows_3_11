@@ -9,21 +9,21 @@ import webbrowser
 import sys
 
 try:
-    os.rmdir('.\\win31\\windowsSetupEnds')
+    os.rmdir('win31/windowsSetupEnds')
 except:
     pass
 
-if not os.path.exists('.\\win31'):
+if not os.path.exists('win31'):
     messagebox.showerror('', 'Cannot start Install manager,try it later')
     sys.exit()
-if not os.path.exists('.\\win31\\users'):
+if not os.path.exists('win31/users'):
     messagebox.showerror('', 'Cannot start Install manager,try it later')
     sys.exit()
 
 
 def check(username, u, pa, root6):
-    usern = open('.\\win31\\users\\%s\\username.txt' % username, 'r')
-    passwo = open('.\\win31\\users\\%s\\password.txt' % username, 'r')
+    usern = open('win31/users/%s/username.txt' % username, 'r')
+    passwo = open('win31/users/%s/password.txt' % username, 'r')
     if usern.read() == u.get() and passwo.read() == pa.get():
         root6.destroy()
     else:
@@ -32,12 +32,13 @@ def check(username, u, pa, root6):
 
 def restart(username, root5):
     def cmd(event):
-        os.startfile('C:\\Windows\\System32\\cmd.exe')
+        pass
+        #os.startfile('C:/Windows/System32\\cmd.exe')
 
-    os.mkdir('.\\win31\\windowsSetupEnds')
+    os.mkdir('win31/windowsSetupEnds')
     root5.destroy()
     root6 = Tk()
-    root6.iconbitmap("bitmap images/LOGON001.ICO")
+    root6.iconbitmap("bitmap_images/LOGON001.ICO")
     root6.bind('<Control-Shift-Alt-F10>', cmd)
     root6.title('')
     Label(root6, text='Имя:').grid()
@@ -53,38 +54,37 @@ def restart(username, root5):
 
 def lasts(username, root5):
     lastIcon = Toplevel()
-    lastIcon.iconbitmap("bitmap images/WINSE001.ICO")
+    #lastIcon.iconbitmap("bitmap_images/WINSE001.ICO")
     lastIcon.title('Windows setup ends!')
 
     Button(lastIcon, text='Перезагрузить', command=lambda: restart(username, root5)).grid(row=0, column=0)
-    Button(lastIcon, text='Вернуться в MS-DOS',
-           command=lambda: os.startfile('C:\\Windows\\System32\\cmd.exe')).grid(row=0, column=1)
+    Button(lastIcon, text='Вернуться в MS-DOS').grid(row=0, column=1)
 
 
 def next(root2, username, password):
     def cmd(event):
-        os.startfile('C:\\Windows\\System32\\cmd.exe')
+        pass
 
     root2.destroy()
-    os.mkdir('.\\win31\\users\\%s' % username)
-    f = open('.\\win31\\users\\%s\\username.txt' % username, 'w')
+    os.mkdir('win31/users/%s' % username)
+    f = open('win31/users/%s/username.txt' % username, 'w')
     f.write(username)
     f.close()
-    p = open('.\\win31\\users\\%s\\password.txt' % username, 'w')
+    p = open('win31/users/%s/password.txt' % username, 'w')
     p.write(password)
     p.close()
-    tu = open('.\\win31\\users\\currentUser.txt', 'w')
+    tu = open('win31/users/currentUser.txt', 'w')
     tu.write(username)
     tu.close()
-    bg = open('.\\win31\\users\\%s\\currentBg.txt' % username, 'w')
+    bg = open('win31/users/%s/currentBg.txt' % username, 'w')
     bg.close()
     ApplicationInstallingNow = 'Календарь'
     FileInstallingNow = 'Calendar.exe'
     root3 = Tk()
-    root3.iconbitmap("bitmap images/WINSE001.ICO")
+    #root3.iconbitmap("bitmap_images/WINSE001.ICO")
     root3.bind('<Control-Shift-Alt-F10>', cmd)
     root4 = Toplevel()
-    root4.iconbitmap("bitmap images/WINSE001.ICO")
+    #root4.iconbitmap("bitmap_images/WINSE001.ICO")
     root4.bind('<Control-Shift-Alt-F10>', cmd)
     root3.title('Windows Setup')
     root4.title('Windows Setup')
@@ -185,7 +185,7 @@ def next(root2, username, password):
     root4.update_idletasks()
     root3.destroy()
     root5 = Tk()
-    root5.iconbitmap("bitmap images/WINSE001.ICO")
+    #root5.iconbitmap("bitmap_images/WINSE001.ICO")
     root5.bind('<Control-Shift-Alt-F10>', cmd)
     root5.title('Windows Setup')
     Label(root5,
@@ -215,9 +215,9 @@ def helpME2():
 
 def MakeSureYourName(rootForDestroy, username, password):
     def cmd(event):
-        os.startfile('C:\\Windows\\System32\\cmd.exe')
+        pass
 
-    if os.path.exists('.\\win31\\users\\%s' % username):
+    if os.path.exists('win31/users/%s' % username):
         messagebox.showerror('', 'Пользователь с таки именем уже существует')
         rootForDestroy.destroy()
         AskName()
@@ -230,7 +230,7 @@ def MakeSureYourName(rootForDestroy, username, password):
         messagebox.showerror('', 'Увы, но НУЖНО ВВОДИТЬ СВОЙ ПАРОЛЬ!')
         AskName()
     root2 = Tk()
-    root2.iconbitmap("bitmap images/PROGM038.ICO")
+    #root2.iconbitmap("bitmap_images/PROGM038.ICO")
     root2.bind('<Control-Shift-Alt-F10>', cmd)
     root2.title('Windows Setup')
     Label(root2,
@@ -249,18 +249,18 @@ def MakeSureYourName(rootForDestroy, username, password):
 
 
 def sign_in(namee, passw, root):
-    if not os.path.exists('.\\win31\\users\\%s' % namee.get()):
+    if not os.path.exists('win31/users/%s' % namee.get()):
         messagebox.showerror('', 'Такого пользователя не существует')
     else:
         try:
-            usernam = open('.\\win31\\users\\%s\\username.txt' % namee.get(), 'r')
-            passwo = open('.\\win31\\users\\%s\\password.txt' % namee.get(), 'r')
+            usernam = open('win31/users/%s/username.txt' % namee.get(), 'r')
+            passwo = open('win31/users/%s/password.txt' % namee.get(), 'r')
             if usernam.readline() == namee.get() and passwo.readline() == passw.get():
-                tu = open('.\\win31\\users\\currentUser.txt', 'w')
+                tu = open('win31/users/currentUser.txt', 'w')
                 tu.write(namee.get())
                 tu.close()
                 root.destroy()
-                os.mkdir('.\\win31\\windowsSetupEnds')
+                os.mkdir('win31/windowsSetupEnds')
             else:
                 messagebox.showerror('', 'Некоректный пароль или имя!')
         except:
@@ -281,13 +281,15 @@ def helpME():
 
 def AskName():
     def cmd(event):
-        os.startfile('C:\\Windows\\System32\\cmd.exe')
+        pass
+        #os.startfile('C:\\Windows\\System32\\cmd.exe')
 
     def next(event):
         MakeSureYourName(root, username=namee.get(), password=passw.get())
 
     root = Tk()
-    root.iconbitmap("bitmap images/LOGON001.ICO")
+    logo = PhotoImage("bitmap_images/LOGON001.ICO")
+    root.call('wm', 'iconphoto', root._w, logo)
     root.bind('<Control-Shift-Alt-F10>', cmd)
     root.title('Windows Setup')
     lbl = Label(root,

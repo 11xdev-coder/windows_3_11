@@ -23,7 +23,7 @@ ra = '%sx%s' % (screen_width, screen_height)
 rot.destroy()
 
 Windows3_1_setup.setup()
-if not os.path.exists('.\\win31\\windowsSetupEnds'):
+if not os.path.exists('win31/windowsSetupEnds'):
     messagebox.showerror('',
                          'Не удалось установить Windows. Попробуйте перезапустить установку Windows')
     sys.exit()
@@ -47,7 +47,7 @@ messagebox.showerror('Не поддерживается драйвер ShowNames
 root.destroy()
 desktop = Tk()
 programmng = Toplevel()
-programmng.iconbitmap("bitmap images/WINTU002.ICO")
+programmng.iconbitmap("bitmap_images/WINTU002.ICO")
 programmng.wm_attributes('-topmost', 1)
 programmng.geometry('500x500')
 IconProgramManager = PhotoImage(file='images/IconProgramManager.png')
