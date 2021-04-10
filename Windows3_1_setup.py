@@ -1,12 +1,11 @@
-from tkinter import *
 import os
-import tkinter as tk
-import tkinter.ttk as ttk
-from tkinter import messagebox
-import time
 import random
-import webbrowser
 import sys
+import time
+import tkinter.ttk as ttk
+import webbrowser
+from tkinter import *
+from tkinter import messagebox
 
 try:
     os.rmdir('win31/windowsSetupEnds')
@@ -33,7 +32,7 @@ def check(username, u, pa, root6):
 def restart(username, root5):
     def cmd(event):
         pass
-        #os.startfile('C:/Windows/System32\\cmd.exe')
+        # os.startfile('C:/Windows/System32\\cmd.exe')
 
     os.mkdir('win31/windowsSetupEnds')
     root5.destroy()
@@ -54,7 +53,7 @@ def restart(username, root5):
 
 def lasts(username, root5):
     lastIcon = Toplevel()
-    #lastIcon.iconbitmap("bitmap_images/WINSE001.ICO")
+    # lastIcon.iconbitmap("bitmap_images/WINSE001.ICO")
     lastIcon.title('Windows setup ends!')
 
     Button(lastIcon, text='Перезагрузить', command=lambda: restart(username, root5)).grid(row=0, column=0)
@@ -81,10 +80,10 @@ def next(root2, username, password):
     ApplicationInstallingNow = 'Календарь'
     FileInstallingNow = 'Calendar.exe'
     root3 = Tk()
-    #root3.iconbitmap("bitmap_images/WINSE001.ICO")
+    # root3.iconbitmap("bitmap_images/WINSE001.ICO")
     root3.bind('<Control-Shift-Alt-F10>', cmd)
     root4 = Toplevel()
-    #root4.iconbitmap("bitmap_images/WINSE001.ICO")
+    # root4.iconbitmap("bitmap_images/WINSE001.ICO")
     root4.bind('<Control-Shift-Alt-F10>', cmd)
     root3.title('Windows Setup')
     root4.title('Windows Setup')
@@ -94,7 +93,9 @@ def next(root2, username, password):
     setupLbl = Label(root4, image=setupIcon)
     setupLbl.grid(column=0)
     Label(root4,
-          text='Добро пожаловать в Микрусофт(только из одного человека) Windows 3.1!\n\n-Если у Вас нет опыта работы с Windows, см. \"Краткое путешествие по Микрусофт Windows\" в книге \"Приступая к работе\".\n-Если вы уже работали с Windows, см. \"Новые возможности этой версии\" в книге \"Приступая к работе\"').grid(
+          text='Добро пожаловать в Микрусофт(только из одного человека) Windows 3.1!\n\n-Если у Вас нет опыта работы '
+               'с Windows, см. \"Краткое путешествие по Микрусофт Windows\" в книге \"Приступая к работе\".\n-Если вы '
+               'уже работали с Windows, см. \"Новые возможности этой версии\" в книге \"Приступая к работе\"').grid(
         row=0, column=1)
     lblApplication = Label(root3, text='Копируем: %s' % ApplicationInstallingNow)
     lblApplication.grid(row=0, column=0)
@@ -185,7 +186,7 @@ def next(root2, username, password):
     root4.update_idletasks()
     root3.destroy()
     root5 = Tk()
-    #root5.iconbitmap("bitmap_images/WINSE001.ICO")
+    # root5.iconbitmap("bitmap_images/WINSE001.ICO")
     root5.bind('<Control-Shift-Alt-F10>', cmd)
     root5.title('Windows Setup')
     Label(root5,
@@ -230,7 +231,7 @@ def MakeSureYourName(rootForDestroy, username, password):
         messagebox.showerror('', 'Увы, но НУЖНО ВВОДИТЬ СВОЙ ПАРОЛЬ!')
         AskName()
     root2 = Tk()
-    #root2.iconbitmap("bitmap_images/PROGM038.ICO")
+    # root2.iconbitmap("bitmap_images/PROGM038.ICO")
     root2.bind('<Control-Shift-Alt-F10>', cmd)
     root2.title('Windows Setup')
     Label(root2,
@@ -282,18 +283,19 @@ def helpME():
 def AskName():
     def cmd(event):
         pass
-        #os.startfile('C:\\Windows\\System32\\cmd.exe')
+        # os.startfile('C:\\Windows\\System32\\cmd.exe')
 
     def next(event):
         MakeSureYourName(root, username=namee.get(), password=passw.get())
 
     root = Tk()
-    logo = PhotoImage("bitmap_images/LOGON001.ICO")
-    root.call('wm', 'iconphoto', root._w, logo)
+    root.iconbitmap("bitmap_images/LOGON001.ICO")
     root.bind('<Control-Shift-Alt-F10>', cmd)
     root.title('Windows Setup')
     lbl = Label(root,
-                text='В окне внизу введите Ваше полное имя и пароль\n\nЗатем выберите Продолжить или нажмите \nENTER.\n\nВведеная вами информация будет\nиспользована программой Setup для\nдальнейшей установки сиситемы Windows.')
+                text='В окне внизу введите Ваше полное имя и пароль\n\nЗатем выберите Продолжить или нажмите '
+                     '\nENTER.\n\nВведеная вами информация будет\nиспользована программой Setup для\nдальнейшей '
+                     'установки сиситемы Windows.')
     lbl.grid(columnspan=3)
     Label(root, text='Имя:').grid(row=1, columnspan=3)
     Label(root, text='Пароль: ').grid(row=4, columnspan=3)

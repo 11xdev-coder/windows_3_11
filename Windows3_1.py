@@ -1,18 +1,19 @@
-from tkinter import *
-import time
-import sys
 import os
-import math
-import playsound
-import psutil
+import sys
+import time
+from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import Combobox
-import Windows3_1_setup
-import windows3_1_run
-import windows3_1_filemanager
-import windows3_1_control_panel
+
+import playsound
+import psutil
 import pygame
 from PIL import Image, ImageTk
+
+import Windows3_1_setup
+import windows3_1_control_panel
+import windows3_1_filemanager
+import windows3_1_run
 
 pygame.init()
 
@@ -97,8 +98,8 @@ def fullscreen3(fullscreenbutton2, c, deiconifybutton2):
     if fullscreenbutton2['text'] == '>':
         c.geometry('%s+0+0' % ra)
         fullscreenbutton2['text'] = '<>'
-        deiconifybutton2.place(x=screen_width-65, y=0)
-        fullscreenbutton2.place(x=screen_width-40, y=0)
+        deiconifybutton2.place(x=screen_width - 65, y=0)
+        fullscreenbutton2.place(x=screen_width - 40, y=0)
     elif fullscreenbutton2['text'] == '<>':
         c.geometry('500x500+0+0')
         fullscreenbutton2['text'] = '>'

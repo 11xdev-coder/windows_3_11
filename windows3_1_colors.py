@@ -1,6 +1,7 @@
-from tkinter import *
-import HoverInfo
 import math
+from tkinter import *
+
+import HoverInfo
 
 
 def iconfy(root, iconifybutton):
@@ -46,9 +47,11 @@ def takebg(MainCanvas, bgForCanvas, screen_width, screen_height):
 
 def selectbg1(cnvs, screen_width, screen_height, bg1):
     bg1.grid_forget()
+
     def des(event):
         root2.destroy()
         bg1.grid(row=0, column=0)
+
     bg1img = PhotoImage(file='images/bg1.png')
     root2 = Toplevel()
     root2.title('Фон')
@@ -77,7 +80,7 @@ def main(colors, cp, canvas):
     ra = '%sx%s' % (screen_width, screen_height)
     root.title('Цвета')
     root.geometry('500x500')
-    bg1 = Button(root, image=bgImg, command=lambda: selectbg1(canvas, screen_width, screen_height,bg1))
+    bg1 = Button(root, image=bgImg, command=lambda: selectbg1(canvas, screen_width, screen_height, bg1))
     hover = HoverInfo.HoverInfo(bg1, 'Select a background')
     bg1.grid(row=0, column=0)
     deiconifybutton = Button(root, text='<', command=lambda: deiconfy(root, cp))
